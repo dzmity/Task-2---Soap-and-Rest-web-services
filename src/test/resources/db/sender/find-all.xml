@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <senders sender_id="1" sender_name="Company1" />
+    <senders sender_id="2" sender_name="Company2" />    
+    <senders sender_id="3" sender_name="Company3" />    
+	
+    <sender_contacts  id="1" telephone_number="+37529456346" fax_number="8848396" email="company1@gmail.com" />
+    <sender_contacts  id="2" telephone_number="+37529456347" fax_number="8848395" email="company2@gmail.com" />  
+    <sender_contacts  id="3" telephone_number="+37529456348" fax_number="8848394" email="company3@gmail.com" />    
+</dataset>

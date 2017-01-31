@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+
+        <!-- NOTE that after automapping with IDEA property username and password will delete -->
+        <!--and will be:  Initial SessionFactory failedorg.hibernate.service.spi.ServiceException: Unable to create requested service-->
+        <property name="connection.username">dmitry_rafalovich</property>
+        <property name="connection.password">qwerty123</property>
+        <mapping class="by.epam.rafalovich.archiveservice.entity.Recipient"/>
+        <mapping class="by.epam.rafalovich.archiveservice.entity.Sender"/>
+        <mapping class="by.epam.rafalovich.archiveservice.entity.SenderInfo"/>
+        <mapping class="by.epam.rafalovich.archiveservice.entity.CommunicationRecord"/>
+    </session-factory>
+</hibernate-configuration>

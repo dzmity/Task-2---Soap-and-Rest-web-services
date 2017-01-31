@@ -1,0 +1,132 @@
+<definitions name="ArchiveService"
+             targetNamespace="http://rafalovich.epam.by/wsdl/ArchiveService.wsdl"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://rafalovich.epam.by/wsdl/ArchiveService.wsdl"
+             xmlns:xsd="http://rafalovich.epam.by/ArchiveService.xsd">
+
+    <types>
+        <schema targetNamespace="http://rafalovich.epam.by/ArchiveService.xsd"
+                xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:tns="http://rafalovich.epam.by/ArchiveService.xsd">
+
+            <element name="criteriaList" type="tns:CriteriaList"/>
+            <!--<element name="archive" type="tns:Archive"/>-->
+
+            <complexType name="CriteriaList">
+                <sequence minOccurs="0" maxOccurs="1">
+                    <element name="from" type="positiveInteger"/>
+                    <element name="to" type="tns:Recipient"/>
+                </sequence>
+            </complexType>
+
+            <!--<simpleType name="SenderId">
+                <restriction base="integer">
+                    <minInclusive value="0"/>
+                    <maxInclusive value="100"/>
+                </restriction>
+            </simpleType>-->
+
+            <complexType name="Sender">
+                <sequence minOccurs="1" maxOccurs="1">
+                    <element name="id" type="integer"/>
+                    <element name="senderName" type="string"/>
+                    <element name="senderInfo" type="tns:SenderInfo"/>
+                </sequence>
+            </complexType>
+
+            <complexType name="SenderInfo">
+                <sequence minOccurs="1" maxOccurs="1">
+                    <element name="id" type="integer"/>
+                    <element name="phoneNumber" type="string"/>
+                    <element name="fax" type="string"/>
+                    <element name="email" type="string"/>
+                </sequence>
+            </complexType>
+
+            <complexType name="Recipient">
+                <sequence minOccurs="1" maxOccurs="1">
+                    <element name="id" type="integer"/>
+                    <element name="recipientContact" type="string"/>
+                    <element name="channelType" type="tns:ChannelType"/>
+                </sequence>
+            </complexType>
+
+            <simpleType name="ChannelType">
+                <restriction base="string">
+                    <enumeration  value="SMS"/>
+                    <enumeration value="EMAIL"/>
+                    <enumeration value="FAX"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name="Archive">
+                <sequence minOccurs="0" maxOccurs="1">
+                    <element name="record" type="tns:Record" maxOccurs="unbounded"/>
+                </sequence>
+            </complexType>
+
+            <!-- changed -->
+            <complexType name="Record">
+                <sequence minOccurs="1" maxOccurs="1">
+                    <element name="id" type="integer" minOccurs="0"/>
+                    <element name="operation" type="tns:OperationType" minOccurs="0"/>
+                    <element name="sender" type="tns:Sender" minOccurs="0"/>
+                    <element name="recipient" type="tns:Recipient" minOccurs="0"/>
+                    <element name="dateTime" type="dateTime" minOccurs="0"/>
+                </sequence>
+            </complexType>
+
+            <simpleType name="OperationType">
+                <restriction base="string">
+                    <enumeration value="RESERVATION_CONFIRMATION"/>
+                    <enumeration value="RESERVATION_CANCELLATION"/>
+                    <enumeration value="RESERVATION_CHANGING"/>
+                </restriction>
+            </simpleType>
+
+        </schema>
+    </types>
+
+    <!-- changed -->
+    <message name="DataRequest">
+        <part name="request" type="xs:string"/>
+    </message>
+
+    <!-- changed -->
+    <message name="DataResponse">
+        <part name="response" type="xs:string"/>
+    </message>
+
+    <portType name="ArchivePortType">
+        <operation name="findRecords">
+            <input message="tns:DataRequest"/>
+            <output message="tns:DataResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="ArchiveBlinding" type="tns:ArchivePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="findRecords">
+            <soap:operation soapAction="http://rafalovich.epam.by/wsdl/CommunicationService/findRecords"/>
+
+            <input>
+                <soap:body use="literal" />
+            </input>
+
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+    </binding>
+
+    <service name="ArchiveService">
+        <documentation>WSDL File for CommunicationService</documentation>
+        <port binding="tns:ArchiveBlinding" name="ArchivePort">
+            <soap:address
+                    location="http://localhost:8085/web-service/ws/archiveservice"/>
+        </port>
+    </service>
+
+</definitions>

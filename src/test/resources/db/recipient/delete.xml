@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <communication_types type_id="0" type_Name="SMS" />
+    <communication_types type_id="1" type_Name="EMAIL" />
+    <communication_types type_id="2" type_Name="FAX" />
+
+    <recipients recipient_id="1" channel_id="0" recipient_contact="12345" />
+    <recipients recipient_id="2" channel_id="1" recipient_contact="12345@email.ru" />
+    <recipients recipient_id="3" channel_id="2" recipient_contact="123r45" />
+    <recipients recipient_id="4" channel_id="0" recipient_contact="123333345" />
+    <recipients recipient_id="5" channel_id="1" recipient_contact="qwerty123@gmail.com" />
+</dataset>
