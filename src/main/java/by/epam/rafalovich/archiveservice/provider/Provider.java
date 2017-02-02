@@ -1,21 +1,20 @@
 package by.epam.rafalovich.archiveservice.provider;
 
-
 import by.epam.rafalovich.archiveservice.Archive;
 import by.epam.rafalovich.archiveservice.Record;
+import by.epam.rafalovich.archiveservice.Sender;
+import by.epam.rafalovich.archiveservice.SenderCriteriaList;
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
 import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
-import by.epam.rafalovich.archiveservice.exception.DAOException;
 import by.epam.rafalovich.wsdl.archiveservice_wsdl.ArchivePortType;
-
 import org.dozer.Mapper;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.jws.WebParam;
 
+import javax.jws.WebParam;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,8 +26,10 @@ public class Provider implements ArchivePortType {
 
     @Autowired
     RecordDAO recordDAOImpl;
+
     @Autowired
     private DozerBeanMapperFactoryBean dozerBean;
+
     @Autowired
     SenderDAO senderDAOImpl;
 
@@ -38,19 +39,15 @@ public class Provider implements ArchivePortType {
         Archive archive = new Archive();
         List<Record> recordList = archive.getRecord();
 
-        try{
+        try {
 
-            Collection<CommunicationRecord> records = recordDAOImpl.findRecordsBySender(( new Long(request)));
+            Collection<CommunicationRecord> records = recordDAOImpl.findRecordsBySender((new Long(request)));
             Mapper mapper = (Mapper) dozerBean.getObject();
-            //mapper.setMappingFiles(Arrays.asList("mapping/dozer_mapping.xml"));
-
-            for (CommunicationRecord x: records) {
+            
+            for (CommunicationRecord x : records) {
                 Record record = mapper.map(x, Record.class);
                 recordList.add(record);
             }
-
-        }catch (DAOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,5 +55,35 @@ public class Provider implements ArchivePortType {
         return archive;
     }
 
+    @Override
+    public Sender findSender(@WebParam(partName = "senderRequest", name = "senderRequest", targetNamespace = "") SenderCriteriaList senderRequest) {
 
+        Sender sender = null;
+
+        try {
+
+            Mapper mapper = (Mapper) dozerBean.getObject();
+            BigInteger id = senderRequest.getId();
+            String name = senderRequest.getName();
+            String email = senderRequest.getEmail();
+            String fax = senderRequest.getFax();
+            String number = senderRequest.getNumber();
+
+            if (id != null) {
+                sender = mapper.map(senderDAOImpl.findById(id.longValue()), Sender.class);
+            } else if (name != null) {
+                sender = mapper.map(senderDAOImpl.findSenderBySenderName(name), Sender.class);
+            } else if (email != null) {
+                sender = mapper.map(senderDAOImpl.findSenderByEmail(email), Sender.class);
+            } else if (number != null) {
+                sender = mapper.map(senderDAOImpl.findSenderByPhoneNumber(number), Sender.class);
+            } else if (fax != null) {
+                sender = mapper.map(senderDAOImpl.findSenderByFax(fax), Sender.class);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sender;
+    }
 }
