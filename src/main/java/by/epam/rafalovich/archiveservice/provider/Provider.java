@@ -1,12 +1,11 @@
 package by.epam.rafalovich.archiveservice.provider;
 
-import by.epam.rafalovich.archiveservice.Archive;
-import by.epam.rafalovich.archiveservice.Record;
+import by.epam.rafalovich.archiveservice.*;
 import by.epam.rafalovich.archiveservice.Sender;
-import by.epam.rafalovich.archiveservice.SenderCriteriaList;
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
-import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
+import by.epam.rafalovich.archiveservice.entity.*;
+import by.epam.rafalovich.archiveservice.exception.DAOException;
 import by.epam.rafalovich.wsdl.archiveservice_wsdl.ArchivePortType;
 import org.dozer.Mapper;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
@@ -43,7 +42,7 @@ public class Provider implements ArchivePortType {
 
             Collection<CommunicationRecord> records = recordDAOImpl.findRecordsBySender((new Long(request)));
             Mapper mapper = (Mapper) dozerBean.getObject();
-            
+
             for (CommunicationRecord x : records) {
                 Record record = mapper.map(x, Record.class);
                 recordList.add(record);
@@ -85,5 +84,26 @@ public class Provider implements ArchivePortType {
             e.printStackTrace();
         }
         return sender;
+    }
+
+    @Override
+    public SenderArchive findSenders() {
+
+        SenderArchive archive = new SenderArchive();
+        List<Sender> senders = archive.getSender();
+
+        try{
+            Collection<by.epam.rafalovich.archiveservice.entity.Sender> collection = senderDAOImpl.findAll();
+            Mapper mapper = (Mapper) dozerBean.getObject();
+
+            for (by.epam.rafalovich.archiveservice.entity.Sender x : collection) {
+                Sender sender = mapper.map(x, Sender.class);
+                senders.add(sender);
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return archive;
     }
 }
