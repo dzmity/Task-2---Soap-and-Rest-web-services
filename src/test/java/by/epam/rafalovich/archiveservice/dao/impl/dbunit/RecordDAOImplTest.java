@@ -1,14 +1,19 @@
-package by.epam.rafalovich.archiveservice.dao.impl;
-
+package by.epam.rafalovich.archiveservice.dao.impl.dbunit;
 
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.entity.*;
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.Test;
-import org.unitils.UnitilsJUnit4;
-import org.unitils.dbunit.annotation.DataSet;
-import org.unitils.dbunit.datasetloadstrategy.impl.CleanInsertLoadStrategy;
-import org.unitils.spring.annotation.SpringApplicationContext;
-import org.unitils.spring.annotation.SpringBeanByName;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,11 +26,15 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyLenien
 /**
  * Created by Dzmitry_Rafalovich on 1/26/2017.
  */
-@SpringApplicationContext(value = "spring/config/testbeans.xml")
-@DataSet(value = "db/record/default.xml", loadStrategy = CleanInsertLoadStrategy.class)
-public class RecordDAOImplTest extends UnitilsJUnit4 {
+@RunWith( SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring/config/testbeans.xml")
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+        DirtiesContextTestExecutionListener.class,
+        TransactionDbUnitTestExecutionListener.class,
+        DbUnitTestExecutionListener.class })
+public class RecordDAOImplTest {
 
-    @SpringBeanByName
+    @Autowired
     RecordDAO recordDAOImpl;
 
     private CommunicationRecord initRecord() {
@@ -69,6 +78,7 @@ public class RecordDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void create() throws Exception {
 
         CommunicationRecord record = initRecord();
@@ -80,6 +90,7 @@ public class RecordDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findById() throws Exception {
 
         Long id = 1L;
@@ -91,6 +102,7 @@ public class RecordDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void update() throws Exception {
 
         Long id = 1L;
@@ -114,6 +126,7 @@ public class RecordDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void delete() throws Exception {
 
         Long id = 1L;
@@ -124,6 +137,7 @@ public class RecordDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findAll() throws Exception {
 
         List<CommunicationRecord> result = recordDAOImpl.findAll();
@@ -133,6 +147,7 @@ public class RecordDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findRecordsBySender() throws Exception {
 
         Long id = 2L;
@@ -143,6 +158,7 @@ public class RecordDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findRecordsByRecipient() throws Exception {
 
         Long id = 2L;

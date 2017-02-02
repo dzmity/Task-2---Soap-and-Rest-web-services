@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-    <communication_types type_id="0" type_Name="SMS" />
-    <communication_types type_id="1" type_Name="EMAIL" />
-    <communication_types type_id="2" type_Name="FAX" />
+    <TEST_USER.communication_types type_id="0" type_Name="SMS" />
+    <TEST_USER.communication_types type_id="1" type_Name="EMAIL" />
+    <TEST_USER.communication_types type_id="2" type_Name="FAX" />
 
-    <recipients recipient_id="1" channel_id="0" recipient_contact="12345" />
+    <TEST_USER.recipients recipient_id="1" channel_id="0" recipient_contact="12345" />
 </dataset>

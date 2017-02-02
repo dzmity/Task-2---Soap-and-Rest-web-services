@@ -11,8 +11,17 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-    <!-- Database Configuration -->
-    <!--<import resource="../db/test-data-source.xml"/>-->
+
+    <!-- Auto scan the components -->
+    <context:annotation-config/>
+    <!--Package for scan beans -->
+    <context:component-scan base-package="by.epam.rafalovich.archiveservice.dao" />
+
+    <!--Support transactions -->
+    <tx:annotation-driven/>
+
+
+    <!-- Import for another files and components -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 
         <property name="locations">
@@ -32,7 +41,23 @@
         <property name="password" value="${jdbc.password}" />
     </bean>
 
-    <!--<import resource="../db/test-hibernate.xml"/>-->
+
+
+    <bean id="dbUnitDatabaseConfig" class="com.github.springtestdbunit.bean.DatabaseConfigBean">
+        <property name="skipOracleRecyclebinTables" value="true" />
+        <property name="qualifiedTableNames" value="true" />
+         <!--<property name="caseSensitiveTableNames" value="true"/>-->
+    </bean>
+    <bean id="dbUnitDatabaseConnection"
+          class="com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="databaseConfig" ref="dbUnitDatabaseConfig" />
+        <property name="schema" value="TEST_USER"/>
+    </bean>
+
+
+
+
     <!-- Hibernate session factory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
           p:dataSource-ref="dataSource"
@@ -46,10 +71,12 @@
     </property>
     </bean>
 
-    <!-- Auto scan the components -->
-    <context:annotation-config/>
-    <context:component-scan base-package="by.epam.rafalovich.archiveservice.entity" />
-    <tx:annotation-driven/>
+
+
+
+
+
+
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
           p:sessionFactory-ref="sessionFactory"/>

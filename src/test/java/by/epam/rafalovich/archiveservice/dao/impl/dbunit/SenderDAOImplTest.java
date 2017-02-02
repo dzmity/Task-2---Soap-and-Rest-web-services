@@ -1,32 +1,41 @@
-package by.epam.rafalovich.archiveservice.dao.impl;
+package by.epam.rafalovich.archiveservice.dao.impl.dbunit;
 
 
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
 import by.epam.rafalovich.archiveservice.entity.Sender;
 import by.epam.rafalovich.archiveservice.entity.SenderInfo;
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.Test;
-import org.unitils.UnitilsJUnit4;
-import org.unitils.dbunit.annotation.DataSet;
-import org.unitils.dbunit.datasetloadstrategy.impl.CleanInsertLoadStrategy;
-import org.unitils.spring.annotation.SpringApplicationContext;
-import org.unitils.spring.annotation.SpringBeanByName;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyLenientEquals;
 
 /**
  * Created by Dzmitry_Rafalovich on 1/26/2017.
  */
-@SpringApplicationContext(value = "spring/config/testbeans.xml")
-@DataSet(value = "db/sender/default.xml", loadStrategy = CleanInsertLoadStrategy.class)
-public class SenderDAOImplTest extends UnitilsJUnit4 {
 
-    @SpringBeanByName
+@RunWith( SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring/config/testbeans.xml")
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+        DirtiesContextTestExecutionListener.class,
+        TransactionDbUnitTestExecutionListener.class,
+        DbUnitTestExecutionListener.class })
+public class SenderDAOImplTest {
+
+   @Autowired
     private SenderDAO senderDAOImpl;
 
     private Sender initSender() {
@@ -49,7 +58,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
-    @DataSet(value = "db/sender/create.xml", loadStrategy = CleanInsertLoadStrategy.class)
+    @DatabaseSetup(value= "/db/sender/create.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void create() throws Exception {
 
         Sender sender = initSender();
@@ -65,6 +74,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/sender/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findById() throws Exception {
 
         long id = 5L;
@@ -77,6 +87,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/sender/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void update() throws Exception {
 
         long id = 4L;
@@ -90,6 +101,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/sender/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void delete() throws Exception {
 
         long id = 1L;
@@ -101,7 +113,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
-    @DataSet(value = "db/sender/find-all.xml", loadStrategy = CleanInsertLoadStrategy.class)
+    @DatabaseSetup(value= "/db/sender/find-all.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findAll() throws Exception {
 
         List<Sender> result = senderDAOImpl.findAll();
@@ -114,6 +126,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/sender/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findSenderBySenderName() throws Exception {
 
         String name = "Company5";
@@ -126,6 +139,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/sender/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findSenderByPhoneNumber() throws Exception {
 
         String phoneNumber = "+37529456340";
@@ -138,6 +152,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/sender/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findSenderByFax() throws Exception {
 
         String fax = "8848391";
@@ -150,6 +165,7 @@ public class SenderDAOImplTest extends UnitilsJUnit4 {
     }
 
     @Test
+    @DatabaseSetup(value= "/db/sender/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findSenderByEmail() throws Exception {
 
         String email = "company5@gmail.com";

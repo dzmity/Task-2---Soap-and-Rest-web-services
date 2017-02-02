@@ -21,6 +21,7 @@
         <!--Connection pool-->
         <commons.version>1.4</commons.version>
         <cxf.version>3.1.9</cxf.version>
+        <dbunit.version>2.5.3</dbunit.version>
         <javax.servlet.version>2.5</javax.servlet.version>
         <jta.version>1.1</jta.version>
         <!--Tests-->
@@ -34,9 +35,25 @@
         <oracle.version>12.1.0.2</oracle.version>
         <spring.version>4.2.3.RELEASE</spring.version>
         <unitils.version>3.4.2</unitils.version>
+        <spring-test-dbunit.ver>1.2.0</spring-test-dbunit.ver>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>${dbunit.version}</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.springtestdbunit</groupId>
+            <artifactId>spring-test-dbunit</artifactId>
+            <version>${spring-test-dbunit.ver}</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>net.sf.dozer</groupId>
@@ -88,20 +105,6 @@
         <dependency>
             <groupId>org.unitils</groupId>
             <artifactId>unitils-core</artifactId>
-            <version>${unitils.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.unitils</groupId>
-            <artifactId>unitils-spring</artifactId>
-            <version>${unitils.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.unitils</groupId>
-            <artifactId>unitils-dbunit</artifactId>
             <version>${unitils.version}</version>
             <scope>test</scope>
         </dependency>

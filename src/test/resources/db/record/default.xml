@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
 
-	<communication_types type_id="0" type_Name="SMS" />
-    <communication_types type_id="1" type_Name="EMAIL" />
-    <communication_types type_id="2" type_Name="FAX" />
+	<TEST_USER.communication_types type_id="0" type_Name="SMS" />
+    <TEST_USER.communication_types type_id="1" type_Name="EMAIL" />
+    <TEST_USER.communication_types type_id="2" type_Name="FAX" />
 	
-	<recipients recipient_id="1" channel_id="0" recipient_contact="+375336012781" />
-    <recipients recipient_id="2" channel_id="1" recipient_contact="company@email.ru" />
-    <recipients recipient_id="3" channel_id="2" recipient_contact="12345678" />
+	<TEST_USER.recipients recipient_id="1" channel_id="0" recipient_contact="+375336012781" />
+    <TEST_USER.recipients recipient_id="2" channel_id="1" recipient_contact="company@email.ru" />
+    <TEST_USER.recipients recipient_id="3" channel_id="2" recipient_contact="12345678" />
 	
-	<operation_types operation_id="0" operation_name="RESERVATION_CONFIRMATION" />
-	<operation_types operation_id="1" operation_name="RESERVATION_CANCELLATION" />
-	<operation_types operation_id="2" operation_name="RESERVATION_CHANGING" />
+	<TEST_USER.operation_types operation_id="0" operation_name="RESERVATION_CONFIRMATION" />
+	<TEST_USER.operation_types operation_id="1" operation_name="RESERVATION_CANCELLATION" />
+	<TEST_USER.operation_types operation_id="2" operation_name="RESERVATION_CHANGING" />
 	
-    <senders sender_id="1" sender_name="Company1" />
-    <senders sender_id="2" sender_name="Company2" />    
+    <TEST_USER.senders sender_id="1" sender_name="Company1" />
+    <TEST_USER.senders sender_id="2" sender_name="Company2" />
 	
-    <sender_contacts  id="1" telephone_number="+37529456346" fax_number="8848396" email="company1@gmail.com" />
-    <sender_contacts  id="2" telephone_number="+37529456347" fax_number="8848395" email="company2@gmail.com" />    
+    <TEST_USER.sender_contacts  id="1" telephone_number="+37529456346" fax_number="8848396" email="company1@gmail.com" />
+    <TEST_USER.sender_contacts  id="2" telephone_number="+37529456347" fax_number="8848395" email="company2@gmail.com" />
 	
-	<transactions transaction_id="1" operation_id="2" sender_id="2" recipient_id="2" operation_date_time="2015-01-01 12:12:12" />
+	<TEST_USER.transactions transaction_id="1" operation_id="2" sender_id="2" recipient_id="2" operation_date_time="2015-01-01 12:12:12" />
 		
 </dataset>
