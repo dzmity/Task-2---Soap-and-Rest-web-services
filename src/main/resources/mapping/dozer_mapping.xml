@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+      http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <custom-converters>
+            <converter type="by.epam.rafalovich.archiveservice.converter.EnumConverter">
+                <class-a>by.epam.rafalovich.archiveservice.OperationType</class-a>
+                <class-b>by.epam.rafalovich.archiveservice.entity.OperationType</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+    <mapping>
+        <class-a>by.epam.rafalovich.archiveservice.SenderInfo</class-a>
+        <class-b>by.epam.rafalovich.archiveservice.entity.SenderInfo</class-b>
+        <field>
+            <a>id</a>
+            <b>id</b>
+        </field>
+        <field>
+            <a>phoneNumber</a>
+            <b>senderPhoneNumber</b>
+        </field>
+        <field>
+            <a>email</a>
+            <b>senderEmail</b>
+        </field>
+        <field>
+            <a>fax</a>
+            <b>senderFax</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>by.epam.rafalovich.archiveservice.Sender</class-a>
+        <class-b>by.epam.rafalovich.archiveservice.entity.Sender</class-b>
+        <field>
+            <a>id</a>
+            <b>senderId</b>
+        </field>
+        <field>
+            <a>senderName</a>
+            <b>senderName</b>
+        </field>
+        <field>
+            <a>senderInfo</a>
+            <b>info</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>by.epam.rafalovich.archiveservice.Recipient</class-a>
+        <class-b>by.epam.rafalovich.archiveservice.entity.Recipient</class-b>
+        <field>
+            <a>id</a>
+            <b>recipientId</b>
+        </field>
+        <field>
+            <a>recipientContact</a>
+            <b>recipientContact</b>
+        </field>
+        <field custom-converter="by.epam.rafalovich.archiveservice.converter.EnumConverter">
+            <a>channelType</a>
+            <b>chanel</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>by.epam.rafalovich.archiveservice.Record</class-a>
+        <class-b>by.epam.rafalovich.archiveservice.entity.CommunicationRecord</class-b>
+        <field>
+            <a>id</a>
+            <b>recordId</b>
+        </field>
+        <field custom-converter="by.epam.rafalovich.archiveservice.converter.EnumConverter">
+            <a>operation</a>
+            <b>operationType</b>
+        </field>
+        <field>
+            <a>sender</a>
+            <b>sender</b>
+        </field>
+        <field>
+            <a>recipient</a>
+            <b>recipient</b>
+        </field>
+        <field custom-converter="by.epam.rafalovich.archiveservice.converter.DateTimeConverter">
+            <a>dateTime</a>
+            <b>dateTime</b>
+        </field>
+    </mapping>
+
+</mappings>
