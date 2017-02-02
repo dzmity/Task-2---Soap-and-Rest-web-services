@@ -9,6 +9,8 @@ import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
 import by.epam.rafalovich.archiveservice.exception.DAOException;
 import by.epam.rafalovich.wsdl.archiveservice_wsdl.ArchivePortType;
 import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,9 @@ public class Provider implements ArchivePortType {
     RecordDAO recordDAOImpl;
 
     @Autowired
+    private DozerBeanMapperFactoryBean dozerBean;
+
+    @Autowired
     SenderDAO senderDAOImpl;
 
 
@@ -35,14 +40,12 @@ public class Provider implements ArchivePortType {
 
         Archive archive = new Archive();
         List<Record> recordList = archive.getRecord();
+
         try{
 
             Collection<CommunicationRecord> records = recordDAOImpl.findRecordsBySender(( new Long(request)));
-
-            DozerBeanMapper mapper = new DozerBeanMapper();
-            mapper.setMappingFiles(Arrays.asList("mapping/dozer_mapping.xml"));
-
-
+            Mapper mapper = (Mapper) dozerBean.getObject();
+            //mapper.setMappingFiles(Arrays.asList("mapping/dozer_mapping.xml"));
 
             for (CommunicationRecord x: records) {
                 Record record = mapper.map(x, Record.class);
@@ -50,6 +53,8 @@ public class Provider implements ArchivePortType {
             }
 
         }catch (DAOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
