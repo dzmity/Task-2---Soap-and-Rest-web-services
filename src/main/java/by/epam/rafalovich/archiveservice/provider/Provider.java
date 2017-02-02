@@ -8,14 +8,14 @@ import by.epam.rafalovich.archiveservice.dao.SenderDAO;
 import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
 import by.epam.rafalovich.archiveservice.exception.DAOException;
 import by.epam.rafalovich.wsdl.archiveservice_wsdl.ArchivePortType;
-import org.dozer.DozerBeanMapper;
+
 import org.dozer.Mapper;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.jws.WebParam;
-import java.util.Arrays;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -27,13 +27,10 @@ public class Provider implements ArchivePortType {
 
     @Autowired
     RecordDAO recordDAOImpl;
-
     @Autowired
     private DozerBeanMapperFactoryBean dozerBean;
-
     @Autowired
     SenderDAO senderDAOImpl;
-
 
     @Override
     public Archive findRecords(@WebParam(partName = "request", name = "request", targetNamespace = "") String request) {

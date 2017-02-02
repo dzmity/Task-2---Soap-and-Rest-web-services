@@ -12,7 +12,28 @@
                 xmlns:tns="http://rafalovich.epam.by/ArchiveService.xsd">
 
             <element name="criteriaList" type="tns:CriteriaList"/>
-            <!--<element name="archive" type="tns:Archive"/>-->
+            <element name="archive" type="tns:Archive"/>
+            <element name="senderArchive" type="tns:SenderArchive"/>
+            <element name="senderCriteriaList" type="tns:SenderCriteriaList"/>
+
+
+            <complexType name="SenderCriteriaList">
+                <choice>
+                    <element name="id" type="positiveInteger" />
+                    <element name="name" type="string"/>
+                    <element name="email" type="string"/>
+                    <element name="fax" type="string"/>
+                    <element name="number" type="string"/>
+                </choice>
+            </complexType>
+
+
+            <complexType name="SenderArchive">
+                <sequence minOccurs="0" maxOccurs="1">
+                    <element name="sender" type="tns:Sender" maxOccurs="unbounded"/>
+                </sequence>
+            </complexType>
+
 
             <complexType name="CriteriaList">
                 <sequence minOccurs="0" maxOccurs="1">
@@ -20,6 +41,8 @@
                     <element name="to" type="tns:Recipient"/>
                 </sequence>
             </complexType>
+
+
 
             <!--<simpleType name="SenderId">
                 <restriction base="integer">
@@ -89,27 +112,61 @@
         </schema>
     </types>
 
-    <!-- changed -->
+
+
+
+    <message name="FindSenderRequest">
+        <part name="senderRequest" type="xsd:SenderCriteriaList"/>
+    </message>
+
+    <message name="FindSenderResponse">
+        <part name="senderResponse" type="xsd:Sender"/>
+    </message>
+
+
     <message name="DataRequest">
         <part name="request" type="xs:string"/>
     </message>
 
-    <!-- changed -->
     <message name="DataResponse">
         <part name="response" type="xsd:Archive"/>
     </message>
 
+
+
+
+
     <portType name="ArchivePortType">
+        <operation name="findSender">
+            <input message="tns:FindSenderRequest"/>
+            <output message="tns:FindSenderResponse"/>
+        </operation>
+
         <operation name="findRecords">
             <input message="tns:DataRequest"/>
             <output message="tns:DataResponse"/>
         </operation>
     </portType>
 
+
+
+
     <binding name="ArchiveBlinding" type="tns:ArchivePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="findRecords">
             <soap:operation soapAction="http://rafalovich.epam.by/wsdl/CommunicationService/findRecords"/>
+
+            <input>
+                <soap:body use="literal" />
+            </input>
+
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+
+        <operation name="findSender">
+            <soap:operation soapAction="http://rafalovich.epam.by/wsdl/CommunicationService/findSender"/>
 
             <input>
                 <soap:body use="literal" />
