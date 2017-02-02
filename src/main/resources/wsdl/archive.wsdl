@@ -96,7 +96,7 @@
 
     <!-- changed -->
     <message name="DataResponse">
-        <part name="response" type="xs:string"/>
+        <part name="response" type="xsd:Archive"/>
     </message>
 
     <portType name="ArchivePortType">

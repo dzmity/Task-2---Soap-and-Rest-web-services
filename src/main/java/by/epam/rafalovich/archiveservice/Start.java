@@ -17,7 +17,7 @@ public class Start {
 
     public static void main(String[] args) throws DAOException {
         ApplicationContext appContext =
-                new ClassPathXmlApplicationContext("classpath:spring/config/testbeans.xml");
+                new ClassPathXmlApplicationContext("classpath:cxf/cxf-servlet.xml");
 
         Arrays.stream(appContext.getBeanDefinitionNames()).forEach(System.out::println);
         //Session session = ((SessionFactory) appContext.getBean("sessionFactory")).getCurrentSession();
