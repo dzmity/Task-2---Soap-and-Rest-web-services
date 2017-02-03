@@ -22,6 +22,8 @@
         <commons.version>1.4</commons.version>
         <cxf.version>3.1.9</cxf.version>
         <dbunit.version>2.5.3</dbunit.version>
+        <dozer.spring.version>5.5.1</dozer.spring.version>
+        <dozer.version>5.4.0</dozer.version>
         <javax.servlet.version>2.5</javax.servlet.version>
         <jta.version>1.1</jta.version>
         <!--Tests-->
@@ -58,13 +60,13 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
-            <version>5.4.0</version>
+            <version>${dozer.version}</version>
         </dependency>
 
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer-spring</artifactId>
-            <version>5.5.1</version>
+            <version>${dozer.spring.version}</version>
         </dependency>
 
         <dependency>

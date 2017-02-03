@@ -19,11 +19,11 @@
 
     <!--Support transactions -->
     <tx:annotation-driven/>
-
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+          p:sessionFactory-ref="sessionFactory"/>
 
     <!-- Import for another files and components -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-
         <property name="locations">
             <list>
                 <value>classpath:spring/db/test-config.properties</value>
@@ -33,6 +33,7 @@
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
     </bean>
 
+    <!-- Data Source for creating pool of connections -->
     <bean id="dataSource"
           class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -41,8 +42,7 @@
         <property name="password" value="${jdbc.password}" />
     </bean>
 
-
-
+    <!-- This two beans necessary for normal work dbUnit tests with oracle db -->
     <bean id="dbUnitDatabaseConfig" class="com.github.springtestdbunit.bean.DatabaseConfigBean">
         <property name="skipOracleRecyclebinTables" value="true" />
         <property name="qualifiedTableNames" value="true" />
@@ -55,30 +55,16 @@
         <property name="schema" value="TEST_USER"/>
     </bean>
 
-
-
-
     <!-- Hibernate session factory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
           p:dataSource-ref="dataSource"
           p:packagesToScan="by.epam.rafalovich.archiveservice.">
-
-    <property name="hibernateProperties">
-        <props>
-            <prop key="#{T(org.hibernate.cfg.AvailableSettings).DIALECT}">${hibernate.dialect}</prop>
-            <prop key="#{T(org.hibernate.cfg.AvailableSettings).SHOW_SQL}">${hibernate.show_sql}</prop>
-        </props>
+            <property name="hibernateProperties">
+                <props>
+                    <prop key="#{T(org.hibernate.cfg.AvailableSettings).DIALECT}">${hibernate.dialect}</prop>
+                    <prop key="#{T(org.hibernate.cfg.AvailableSettings).SHOW_SQL}">${hibernate.show_sql}</prop>
+                </props>
     </property>
     </bean>
-
-
-
-
-
-
-
-
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
-          p:sessionFactory-ref="sessionFactory"/>
 
 </beans>
