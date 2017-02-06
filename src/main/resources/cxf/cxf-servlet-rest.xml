@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+    <!-- to turn on annotation wiring == turns on only the registered beans
+        through ApplicationContext -->
+    <context:annotation-config />
+
+    <!-- scans and register beans using annotation-config (metadata) -->
+    <context:component-scan base-package="by.epam.rafalovich.archiveservice" />
+
+    <!-- to support Java-to-JSON and vice-versa conversion -->
+    <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+
+    <!-- CXFServlet configured in web.xml sends requests here -->
+    <jaxrs:server id="restContainer" address="/">
+        <jaxrs:serviceBeans>
+            <ref bean="senderService" />
+        </jaxrs:serviceBeans>
+
+        <jaxrs:providers>
+            <ref bean="jsonProvider" />
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <!-- scans and register beans using annotation-config (metadata) -->
+    <import resource="classpath:spring/config/beans.xml" />
+    <!-- register dozer bean -->
+    <import resource="classpath:mapping/dozer-bean.xml" />
+</beans>
