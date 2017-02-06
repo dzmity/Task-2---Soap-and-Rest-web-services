@@ -22,12 +22,14 @@
     <jaxrs:server id="restContainer" address="/">
         <jaxrs:serviceBeans>
             <ref bean="senderService" />
+            <ref bean="archiveService" />
         </jaxrs:serviceBeans>
 
         <jaxrs:providers>
             <ref bean="jsonProvider" />
         </jaxrs:providers>
     </jaxrs:server>
+
 
     <!-- scans and register beans using annotation-config (metadata) -->
     <import resource="classpath:spring/config/beans.xml" />
