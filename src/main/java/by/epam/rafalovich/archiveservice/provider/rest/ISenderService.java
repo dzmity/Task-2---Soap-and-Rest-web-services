@@ -1,11 +1,9 @@
 package by.epam.rafalovich.archiveservice.provider.rest;
 
+import by.epam.rafalovich.archiveservice.Sender;
 import by.epam.rafalovich.archiveservice.SenderArchive;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -19,4 +17,28 @@ public interface ISenderService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     SenderArchive findAllSenders();
+
+    @GET
+    @Path("/findsender/{senderId}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    Sender findSender(@PathParam("senderId") int senderId);
+
+    @PUT
+    @Path("/updatesender")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_FORM_URLENCODED)
+    void updateSender(Sender sender);
+
+    @POST
+    @Path("/createsender")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_FORM_URLENCODED)
+    void createSender(Sender sender);
+
+    @DELETE
+    @Path("/deletesender")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_FORM_URLENCODED)
+    void deleteSender(Sender sender);
 }

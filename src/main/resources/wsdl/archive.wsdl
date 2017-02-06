@@ -53,7 +53,7 @@
 
             <complexType name="Sender">
                 <sequence minOccurs="1" maxOccurs="1">
-                    <element name="id" type="integer"/>
+                    <element name="id" type="integer" minOccurs="0"/>
                     <element name="senderName" type="string"/>
                     <element name="senderInfo" type="tns:SenderInfo"/>
                 </sequence>
@@ -61,7 +61,7 @@
 
             <complexType name="SenderInfo">
                 <sequence minOccurs="1" maxOccurs="1">
-                    <element name="id" type="integer"/>
+                    <element name="id" type="integer" minOccurs="0"/>
                     <element name="phoneNumber" type="string"/>
                     <element name="fax" type="string"/>
                     <element name="email" type="string"/>

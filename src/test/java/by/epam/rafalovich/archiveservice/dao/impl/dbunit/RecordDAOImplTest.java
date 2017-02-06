@@ -82,6 +82,7 @@ public class RecordDAOImplTest {
     public void create() throws Exception {
 
         CommunicationRecord record = initRecord();
+
         recordDAOImpl.create(record);
 
         List<CommunicationRecord> result = recordDAOImpl.findAll();

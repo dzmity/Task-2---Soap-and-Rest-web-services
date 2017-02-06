@@ -48,6 +48,11 @@
             <a>senderInfo</a>
             <b>info</b>
         </field>
+        <!--1-->
+        <field>
+            <a>this</a>
+            <b>info.sender</b>
+        </field>
     </mapping>
 
     <mapping>

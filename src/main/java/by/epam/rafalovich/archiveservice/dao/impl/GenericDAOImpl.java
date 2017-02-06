@@ -41,6 +41,7 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 
         Session session =  currentSession();
         session.save(t);
+
     }
 
     @Override
