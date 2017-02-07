@@ -37,8 +37,11 @@
 
             <complexType name="CriteriaList">
                 <sequence minOccurs="0" maxOccurs="1">
-                    <element name="from" type="positiveInteger"/>
-                    <element name="to" type="tns:Recipient"/>
+                    <element name="senderId" type="positiveInteger" minOccurs="0"/>
+                    <element name="recipientContact" type="string" minOccurs="0"/>
+                    <element name="operationType" type="tns:OperationType" minOccurs="0"/>
+                    <element name="startDateTime" type="dateTime" minOccurs="0"/>
+                    <element name="endDateTime" type="dateTime" minOccurs="0"/>
                 </sequence>
             </complexType>
 
@@ -70,7 +73,7 @@
 
             <complexType name="Recipient">
                 <sequence minOccurs="1" maxOccurs="1">
-                    <element name="id" type="integer"/>
+                    <element name="id" type="integer" minOccurs="0"/>
                     <element name="recipientContact" type="string"/>
                     <element name="channelType" type="tns:ChannelType"/>
                 </sequence>

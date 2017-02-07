@@ -4,15 +4,18 @@ import by.epam.rafalovich.archiveservice.dao.GenericDAO;
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
 import by.epam.rafalovich.archiveservice.dao.impl.SenderDAOImpl;
-import by.epam.rafalovich.archiveservice.entity.SenderInfo;
+
+import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
 import by.epam.rafalovich.archiveservice.entity.OperationType;
 import by.epam.rafalovich.archiveservice.entity.Sender;
+import by.epam.rafalovich.archiveservice.entity.SenderInfo;
 import by.epam.rafalovich.archiveservice.exception.DAOException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Created by Dzmitry_Rafalovich on 1/31/2017.
@@ -26,7 +29,7 @@ public class Start {
         Arrays.stream(appContext.getBeanDefinitionNames()).forEach(System.out::println);
         //Session session = ((SessionFactory) appContext.getBean("sessionFactory")).getCurrentSession();
 
-        GenericDAO<Sender> senderDAO = (SenderDAO) appContext.getBean("senderDAOImpl");
+       /* GenericDAO<Sender> senderDAO = (SenderDAO) appContext.getBean("senderDAOImpl");
         Sender sender = new Sender();
         sender.setSenderName("crown plaza 2");
         SenderInfo info = new SenderInfo();
@@ -36,10 +39,14 @@ public class Start {
         info.setId(123L);
         info.setSender(sender);
         sender.setInfo(info);
-        senderDAO.create(sender);
+        senderDAO.create(sender);*/
+
+
         //GenericDAO<CommunicationRecord> recordDAO = new RecordDAOImpl();
-        /*RecordDAO recordDAO =(RecordDAO) appContext.getBean("recordDAOImpl");
-        CommunicationRecord record = new CommunicationRecord();
+        RecordDAO recordDAO =(RecordDAO) appContext.getBean("recordDAOImpl");
+        Collection<CommunicationRecord> records = recordDAO.findRecords(null, null, null, null, null);
+        System.out.println(records.size());
+        /*CommunicationRecord record = new CommunicationRecord();
         record.setOperationType(OperationType.RESERVATION_CANCELLATION);
         record.setDateTime(LocalDateTime.now());
 
