@@ -3,8 +3,8 @@ package by.epam.rafalovich.archiveservice.provider.rest;
 import by.epam.rafalovich.archiveservice.Sender;
 import by.epam.rafalovich.archiveservice.SenderArchive;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
+import by.epam.rafalovich.archiveservice.exception.DAOException;
 import org.dozer.Mapper;
-import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +19,10 @@ public class SenderServiceImpl implements ISenderService {
 
 
     @Autowired
-    SenderDAO senderDAOImpl;
+    private SenderDAO senderDAOImpl;
 
     @Autowired
-    private DozerBeanMapperFactoryBean dozerBean;
+    private Mapper mapper;
 
     @Override
     public SenderArchive findAllSenders() {
@@ -31,15 +31,15 @@ public class SenderServiceImpl implements ISenderService {
         List<Sender> senders = archive.getSender();
 
         try{
+
             Collection<by.epam.rafalovich.archiveservice.entity.Sender> collection = senderDAOImpl.findAll();
-            Mapper mapper = (Mapper) dozerBean.getObject();
 
             for (by.epam.rafalovich.archiveservice.entity.Sender x : collection) {
                 Sender sender = mapper.map(x, Sender.class);
                 senders.add(sender);
             }
 
-        }catch (Exception e) {
+        }catch (DAOException e) {
             e.printStackTrace();
         }
         return archive;
@@ -50,7 +50,6 @@ public class SenderServiceImpl implements ISenderService {
 
         try{
 
-            Mapper mapper = (Mapper) dozerBean.getObject();
             by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
                     by.epam.rafalovich.archiveservice.entity.Sender.class);
 
@@ -66,7 +65,6 @@ public class SenderServiceImpl implements ISenderService {
 
         try{
 
-            Mapper mapper = (Mapper) dozerBean.getObject();
             by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
                     by.epam.rafalovich.archiveservice.entity.Sender.class);
 
@@ -82,7 +80,6 @@ public class SenderServiceImpl implements ISenderService {
 
         try{
 
-            Mapper mapper = (Mapper) dozerBean.getObject();
             by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
                     by.epam.rafalovich.archiveservice.entity.Sender.class);
 
@@ -99,7 +96,6 @@ public class SenderServiceImpl implements ISenderService {
         Sender sender = null;
 
         try {
-            Mapper mapper = (Mapper) dozerBean.getObject();
             sender = mapper.map(senderDAOImpl.findById((long) senderId), Sender.class);
 
         } catch (Exception e) {

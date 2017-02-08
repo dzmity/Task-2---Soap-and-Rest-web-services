@@ -43,7 +43,7 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
     }
 
     @Override
-    public Collection<CommunicationRecord> findRecords(Long recipientId, Long senderId, LocalDateTime startDateTime,
+    public Collection<CommunicationRecord> findRecords(Long senderId, Long recipientId, LocalDateTime startDateTime,
                                                        LocalDateTime endDateTime, OperationType type) throws DAOException {
 
 

@@ -10,6 +10,7 @@ import by.epam.rafalovich.archiveservice.entity.OperationType;
 import by.epam.rafalovich.archiveservice.entity.Sender;
 import by.epam.rafalovich.archiveservice.entity.SenderInfo;
 import by.epam.rafalovich.archiveservice.exception.DAOException;
+import by.epam.rafalovich.archiveservice.provider.rest.SenderServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -42,10 +43,17 @@ public class Start {
         senderDAO.create(sender);*/
 
 
+       SenderServiceImpl senderService = (SenderServiceImpl) appContext.getBean("senderService");
+       Collection<by.epam.rafalovich.archiveservice.Sender> senders = senderService.findAllSenders().getSender();
+        System.out.println(senders.size());
+
+
         //GenericDAO<CommunicationRecord> recordDAO = new RecordDAOImpl();
-        RecordDAO recordDAO =(RecordDAO) appContext.getBean("recordDAOImpl");
+
+        /*RecordDAO recordDAO =(RecordDAO) appContext.getBean("recordDAOImpl");
         Collection<CommunicationRecord> records = recordDAO.findRecords(null, null, null, null, null);
-        System.out.println(records.size());
+        System.out.println(records.size());*/
+
         /*CommunicationRecord record = new CommunicationRecord();
         record.setOperationType(OperationType.RESERVATION_CANCELLATION);
         record.setDateTime(LocalDateTime.now());

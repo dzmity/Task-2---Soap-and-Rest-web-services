@@ -17,7 +17,7 @@ public interface RecordDAO extends GenericDAO<CommunicationRecord> {
 
     Collection<CommunicationRecord> findRecordsByRecipient(Long recipientId) throws DAOException;
 
-    Collection<CommunicationRecord> findRecords(Long recipientId, Long senderId, LocalDateTime startDateTime,
+    Collection<CommunicationRecord> findRecords(Long senderId, Long recipientId, LocalDateTime startDateTime,
                                                            LocalDateTime endDateTime, OperationType type) throws DAOException;
 
     /*Collection<CommunicationRecord> findRecordsByOperatioName(String  operation) throws DAOException;

@@ -3,16 +3,13 @@ package by.epam.rafalovich.archiveservice.provider.rest;
 import by.epam.rafalovich.archiveservice.*;
 import by.epam.rafalovich.archiveservice.dao.RecipientDAO;
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
-import by.epam.rafalovich.archiveservice.dao.SenderDAO;
 import by.epam.rafalovich.archiveservice.entity.*;
 import by.epam.rafalovich.archiveservice.entity.OperationType;
 import by.epam.rafalovich.archiveservice.entity.Recipient;
 import org.dozer.Mapper;
-import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.QueryParam;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -23,7 +20,7 @@ import java.util.List;
  * Created by Dzmitry_Rafalovich on 2/6/2017.
  */
 @Service("archiveService")
-public class ArchiveService implements IArchiveService {
+public class ArchiveServiceImpl implements IArchiveService {
 
     @Autowired
     RecordDAO recordDAOImpl;
@@ -32,7 +29,7 @@ public class ArchiveService implements IArchiveService {
     RecipientDAO recipientDAOImpl;
 
     @Autowired
-    private DozerBeanMapperFactoryBean dozerBean;
+    private Mapper mapper;
 
     @Override
     public Archive findRecordsBySender(long senderId) {
@@ -43,7 +40,6 @@ public class ArchiveService implements IArchiveService {
         try {
 
             Collection<CommunicationRecord> records = recordDAOImpl.findRecordsBySender(((senderId)));
-            Mapper mapper = (Mapper) dozerBean.getObject();
 
             for (CommunicationRecord x : records) {
                 Record record = mapper.map(x, Record.class);
@@ -59,15 +55,12 @@ public class ArchiveService implements IArchiveService {
     @Override
     public Archive findRecordsJSON(CriteriaList criteriaList) {
 
-
         Archive archive = new Archive();
         List<Record> recordList = archive.getRecord();
 
         try {
 
             Collection<CommunicationRecord> records;
-
-            Mapper mapper = (Mapper) dozerBean.getObject();
 
             if (criteriaList == null) {
 
@@ -109,9 +102,9 @@ public class ArchiveService implements IArchiveService {
     }
 
     @Override
-    public Archive findRecords( BigInteger id,  String recipientContact,
-        XMLGregorianCalendar startDateTime,  XMLGregorianCalendar endDateTime,
-         by.epam.rafalovich.archiveservice.OperationType operationType) {
+    public Archive findRecords(BigInteger id,  String recipientContact,
+                               XMLGregorianCalendar startDateTime,  XMLGregorianCalendar endDateTime,
+                               by.epam.rafalovich.archiveservice.OperationType operationType) {
 
         Archive archive = new Archive();
         List<Record> recordList = archive.getRecord();
@@ -119,8 +112,6 @@ public class ArchiveService implements IArchiveService {
         try {
 
             Collection<CommunicationRecord> records;
-
-            Mapper mapper = (Mapper) dozerBean.getObject();
 
             Long recipientId = null;
 
@@ -136,7 +127,7 @@ public class ArchiveService implements IArchiveService {
             by.epam.rafalovich.archiveservice.entity.OperationType type = operationType != null ?
                     mapper.map(operationType, OperationType.class) : null;
 
-            records = recordDAOImpl.findRecords(recipientId, senderId, start, end, type);
+            records = recordDAOImpl.findRecords(senderId, recipientId, start, end, type);
 
             for (CommunicationRecord x : records) {
                 Record record = mapper.map(x, Record.class);
