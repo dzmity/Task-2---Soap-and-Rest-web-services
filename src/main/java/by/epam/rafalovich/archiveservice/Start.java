@@ -9,7 +9,6 @@ import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
 import by.epam.rafalovich.archiveservice.entity.OperationType;
 import by.epam.rafalovich.archiveservice.entity.Sender;
 import by.epam.rafalovich.archiveservice.entity.SenderInfo;
-import by.epam.rafalovich.archiveservice.exception.DAOException;
 import by.epam.rafalovich.archiveservice.provider.rest.SenderServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,7 +22,7 @@ import java.util.Collection;
  */
 public class Start {
 
-    public static void main(String[] args) throws DAOException {
+    public static void main(String[] args) {
         ApplicationContext appContext =
                 new ClassPathXmlApplicationContext("classpath:cxf/cxf-servlet-rest.xml");
 

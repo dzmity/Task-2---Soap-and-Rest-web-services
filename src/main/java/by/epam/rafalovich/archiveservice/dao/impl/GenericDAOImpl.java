@@ -1,7 +1,6 @@
 package by.epam.rafalovich.archiveservice.dao.impl;
 
 import by.epam.rafalovich.archiveservice.dao.GenericDAO;
-import by.epam.rafalovich.archiveservice.exception.DAOException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 
     @Override
     @Transactional
-    public void create(T t) throws DAOException {
+    public void create(T t) {
 
         Session session =  currentSession();
         session.save(t);
@@ -45,27 +44,27 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     }
 
     @Override
-    public T findById(Long id) throws DAOException {
+    public T findById(Long id) {
 
         return currentSession().get(daoType, id);
     }
 
     @Override
     @Transactional
-    public void update(T t) throws DAOException {
+    public void update(T t) {
 
         currentSession().merge(t);
     }
 
     @Override
     @Transactional
-    public void delete(T t) throws DAOException {
+    public void delete(T t){
 
         currentSession().delete(t);
     }
 
     @Override
-    public List<T> findAll() throws DAOException {
+    public List<T> findAll() {
 
         return currentSession().createCriteria(daoType).list();
     }

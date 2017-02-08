@@ -1,18 +1,15 @@
 package by.epam.rafalovich.archiveservice.dao.impl;
 
-
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
 import by.epam.rafalovich.archiveservice.entity.OperationType;
-import by.epam.rafalovich.archiveservice.exception.DAOException;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -30,13 +27,13 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
     private static final int START_MINUTE= 0;
 
     @Override
-    public Collection<CommunicationRecord> findRecordsBySender(Long senderId) throws DAOException {
+    public Collection<CommunicationRecord> findRecordsBySender(Long senderId) {
         Query query = currentSession().getNamedQuery("findBySender").setLong("senderId", senderId);
         return  query.list();
     }
 
     @Override
-    public Collection<CommunicationRecord> findRecordsByRecipient(Long recipientId) throws DAOException {
+    public Collection<CommunicationRecord> findRecordsByRecipient(Long recipientId) {
 
         Query query = currentSession().getNamedQuery("findByRecipient").setLong("recipientId", recipientId);
         return  query.list();
@@ -44,8 +41,7 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
 
     @Override
     public Collection<CommunicationRecord> findRecords(Long senderId, Long recipientId, LocalDateTime startDateTime,
-                                                       LocalDateTime endDateTime, OperationType type) throws DAOException {
-
+                                                       LocalDateTime endDateTime, OperationType type) {
 
         LocalDateTime start = startDateTime != null ? startDateTime : LocalDateTime.of(
                 START_YEAR, START_MONTH, START_DAY, START_HOUR, START_MINUTE);

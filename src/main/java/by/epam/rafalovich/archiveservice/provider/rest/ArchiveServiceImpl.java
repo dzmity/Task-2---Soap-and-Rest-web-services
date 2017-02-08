@@ -109,34 +109,29 @@ public class ArchiveServiceImpl implements IArchiveService {
         Archive archive = new Archive();
         List<Record> recordList = archive.getRecord();
 
-        try {
+        Collection<CommunicationRecord> records;
 
-            Collection<CommunicationRecord> records;
+        Long recipientId = null;
 
-            Long recipientId = null;
-
-            if (recipientContact != null) {
-                Recipient recipient = recipientDAOImpl.findRecipientByContact(recipientContact);
-                recipientId = recipient != null ? recipient.getRecipientId() : null;
-            }
-
-            Long senderId = id != null ? id.longValue() : null;
-
-            LocalDateTime start = startDateTime != null ? mapper.map(startDateTime, LocalDateTime.class) : null;
-            LocalDateTime end = endDateTime != null ? mapper.map(endDateTime, LocalDateTime.class) : null;
-            by.epam.rafalovich.archiveservice.entity.OperationType type = operationType != null ?
-                    mapper.map(operationType, OperationType.class) : null;
-
-            records = recordDAOImpl.findRecords(senderId, recipientId, start, end, type);
-
-            for (CommunicationRecord x : records) {
-                Record record = mapper.map(x, Record.class);
-                recordList.add(record);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (recipientContact != null) {
+            Recipient recipient = recipientDAOImpl.findRecipientByContact(recipientContact);
+            recipientId = recipient != null ? recipient.getRecipientId() : null;
         }
+
+        Long senderId = id != null ? id.longValue() : null;
+
+        LocalDateTime start = startDateTime != null ? mapper.map(startDateTime, LocalDateTime.class) : null;
+        LocalDateTime end = endDateTime != null ? mapper.map(endDateTime, LocalDateTime.class) : null;
+        by.epam.rafalovich.archiveservice.entity.OperationType type = operationType != null ?
+                mapper.map(operationType, OperationType.class) : null;
+
+        records = recordDAOImpl.findRecords(senderId, recipientId, start, end, type);
+
+        for (CommunicationRecord x : records) {
+            Record record = mapper.map(x, Record.class);
+            recordList.add(record);
+        }
+
         return archive;
     }
 }
