@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Dzmitry_Rafalovich on 2/6/2017.
  */
-@Service("senderService")
+@Service("senderServiceREST")
 public class SenderServiceImpl implements ISenderService {
 
     @Autowired

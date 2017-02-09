@@ -19,16 +19,6 @@
                 <bean class="by.epam.rafalovich.archiveservice.converter.DateTimeConverter"/>
             </list>
         </property>
-        <!--<property name="eventListeners">
-            <list>
-                <bean class="org.dozer.listeners.EventListener"/>
-            </list>
-        </property>-->
-        <!--<property name="factories">
-            <map>
-                <entry key="id" value-ref="bean-factory-ref"/>
-            </map>
-        </property>-->
     </bean>
 
     <bean id="org.dozer.Mapper" name="mapper" class="org.dozer.DozerBeanMapper">
@@ -41,6 +31,4 @@
             </list>
         </property>
     </bean>
-
-
 </beans>

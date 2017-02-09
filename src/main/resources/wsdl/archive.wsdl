@@ -116,52 +116,61 @@
     </types>
 
 
-
-
+    <!--findSender by criteriaList-->
     <message name="FindSenderRequest">
         <part name="senderRequest" type="xsd:SenderCriteriaList"/>
     </message>
-
     <message name="FindSenderResponse">
         <part name="senderResponse" type="xsd:Sender"/>
     </message>
 
+    <!--find all senders-->
+    <message name="Empty">
+    </message>
     <message name="FindAllSendersResponse">
         <part name="senderArchiveResponse" type="xsd:SenderArchive"/>
     </message>
 
-    <message name="Empty">
-
+    <!--delete senders-->
+    <message name="DeleteRequest">
+        <part name="deleteRequest" type="xsd:Sender"/>
+    </message>
+    <message name="DeleteResponse">
     </message>
 
-    <message name="DataRequest">
-        <part name="request" type="xs:string"/>
+    <!--update senders-->
+    <message name="UpdateRequest">
+        <part name="updateRequest" type="xsd:Sender"/>
+    </message>
+    <message name="UpdateResponse">
     </message>
 
-    <message name="DataResponse">
-        <part name="response" type="xsd:Archive"/>
+    <!--create senders-->
+    <message name="CreateRequest">
+        <part name="createRequest" type="xsd:Sender"/>
+    </message>
+    <message name="CreateResponse">
     </message>
 
     <!--  Find Records by CriteriaList   -->
     <message name="FindRecordsRequest">
         <part name="request" type="xsd:CriteriaList"/>
     </message>
-
     <message name="FindRecordResponse">
         <part name="response" type="xsd:Archive"/>
     </message>
 
 
-    <!--  new portType  -->
-    <portType name="ArchivePortTypeNew">
+    <!--  archive portType  -->
+    <portType name="ArchivePortType">
         <operation name="searchRecords">
             <input message="tns:FindRecordsRequest"/>
             <output message="tns:FindRecordResponse"/>
         </operation>
     </portType>
 
-    <portType name="ArchivePortType">
-
+    <!--  sender portType  -->
+    <portType name="SenderPortType">
         <operation name="findSenders">
             <input message="tns:Empty"/>
             <output message="tns:FindAllSendersResponse"/>
@@ -172,77 +181,102 @@
             <output message="tns:FindSenderResponse"/>
         </operation>
 
-        <operation name="findRecords">
-            <input message="tns:DataRequest"/>
-            <output message="tns:DataResponse"/>
+        <operation name="createSender">
+            <input message="tns:CreateRequest"/>
+            <output message="tns:CreateResponse"/>
+        </operation>
+
+        <operation name="updateSender">
+            <input message="tns:UpdateRequest"/>
+            <output message="tns:UpdateResponse"/>
+        </operation>
+
+        <operation name="deleteSender">
+            <input message="tns:DeleteRequest"/>
+            <output message="tns:DeleteResponse"/>
         </operation>
     </portType>
 
-    <!--  new binding  -->
-    <binding name="ArchiveBlindingNew" type="tns:ArchivePortTypeNew">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <!--  archive binding  -->
+    <binding name="ArchiveBinding" type="tns:ArchivePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
         <operation name="searchRecords">
-            <soap:operation soapAction="http://rafalovich.epam.by/wsdl/CommunicationService/searchRecords"/>
-
-            <input>
-                <soap:body use="literal" />
-            </input>
-
-            <output>
-                <soap:body use="literal" />
-            </output>
-
+            <soap:operation soapAction="http://rafalovich.epam.by/soap/searchRecords"/>
+                <input>
+                    <soap:body use="literal" />
+                </input>
+                <output>
+                    <soap:body use="literal" />
+                </output>
         </operation>
     </binding>
 
-    <binding name="ArchiveBlinding" type="tns:ArchivePortType">
+    <!--  sender binding  -->
+    <binding name="SenderBinding" type="tns:SenderPortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
         <operation name="findSenders">
-            <soap:operation soapAction="http://rafalovich.epam.by/wsdl/CommunicationService/findSenders"/>
-
-            <output>
-                <soap:body use="literal" />
-            </output>
-
-        </operation>
-
-        <operation name="findRecords">
-            <soap:operation soapAction="http://rafalovich.epam.by/wsdl/CommunicationService/findRecords"/>
-
-            <input>
-                <soap:body use="literal" />
-            </input>
+            <soap:operation soapAction="http://rafalovich.epam.by/soap/findSenders"/>
 
             <output>
                 <soap:body use="literal" />
             </output>
         </operation>
+
 
         <operation name="findSender">
-            <soap:operation soapAction="http://rafalovich.epam.by/wsdl/CommunicationService/findSender"/>
+            <soap:operation soapAction="http://rafalovich.epam.by/soap/findSender"/>
+
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+
+
+        <operation name="createSender">
+            <soap:operation soapAction="http://rafalovich.epam.by/soap/createSender"/>
 
             <input>
                 <soap:body use="literal" />
             </input>
 
-            <output>
+        </operation>
+
+        <operation name="deleteSender">
+            <soap:operation soapAction="http://rafalovich.epam.by/soap/deleteSender"/>
+
+            <input>
                 <soap:body use="literal" />
-            </output>
+            </input>
+
+        </operation>
+
+        <operation name="updateSender">
+            <soap:operation soapAction="http://rafalovich.epam.by/soap/updateSender"/>
+
+            <input>
+                <soap:body use="literal" />
+            </input>
+
         </operation>
     </binding>
 
+
+
     <service name="ArchiveService">
         <documentation>WSDL File for ArchiveService</documentation>
-        <port binding="tns:ArchiveBlinding" name="ArchivePort">
+        <port binding="tns:SenderBinding" name="SenderPort">
             <soap:address
-                    location="http://localhost:8085/web-service/ws/archiveservice"/>
+                    location="http://localhost:8085/soap/senderservice"/>
         </port>
 
-        <port binding="tns:ArchiveBlindingNew" name="ArchivePortNew">
+        <port binding="tns:ArchiveBinding" name="ArchivePort">
             <soap:address
-                    location="http://localhost:8085/web-service/ws/archiveservicenew"/>
+                    location="http://localhost:8085/soap/archiveservice"/>
         </port>
     </service>
 

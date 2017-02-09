@@ -1,11 +1,9 @@
-package by.epam.rafalovich.archiveservice.provider.soap;
+package by.epam.rafalovich.archiveservice.provider.soap.impl;
 
 import by.epam.rafalovich.archiveservice.*;
 import by.epam.rafalovich.archiveservice.Sender;
-import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
-import by.epam.rafalovich.archiveservice.entity.*;
-import by.epam.rafalovich.wsdl.archiveservice_wsdl.ArchivePortType;
+import by.epam.rafalovich.wsdl.archiveservice_wsdl.SenderPortType;
 import org.dozer.Mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,33 +17,14 @@ import java.util.List;
 /**
  * Created by Dzmitry_Rafalovich on 1/30/2017.
  */
-@Service
-public class Provider implements ArchivePortType {
-
-    @Autowired
-    RecordDAO recordDAOImpl;
+@Service("senderServiceSOAP")
+public class SenderServiceImpl implements SenderPortType {
 
     @Autowired
     private Mapper mapper;
 
     @Autowired
     SenderDAO senderDAOImpl;
-
-    @Override
-    public Archive findRecords(@WebParam(partName = "request", name = "request", targetNamespace = "") String request) {
-
-        Archive archive = new Archive();
-        List<Record> recordList = archive.getRecord();
-
-        Collection<CommunicationRecord> records = recordDAOImpl.findRecordsBySender((new Long(request)));
-
-        for (CommunicationRecord x : records) {
-            Record record = mapper.map(x, Record.class);
-            recordList.add(record);
-        }
-
-        return archive;
-    }
 
     @Override
     public Sender findSender(@WebParam(partName = "senderRequest", name = "senderRequest", targetNamespace = "")
@@ -88,5 +67,32 @@ public class Provider implements ArchivePortType {
         }
 
         return archive;
+    }
+
+    @Override
+    public void updateSender(@WebParam(partName = "updateRequest", name = "updateRequest", targetNamespace = "") Sender sender) {
+
+        by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
+                by.epam.rafalovich.archiveservice.entity.Sender.class);
+
+        senderDAOImpl.update(senderDomain);
+    }
+
+    @Override
+    public void createSender(@WebParam(partName = "createRequest", name = "createRequest", targetNamespace = "") Sender sender) {
+
+        by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
+                by.epam.rafalovich.archiveservice.entity.Sender.class);
+
+        senderDAOImpl.create(senderDomain);
+    }
+
+    @Override
+    public void deleteSender(@WebParam(partName = "deleteRequest", name = "deleteRequest", targetNamespace = "") Sender sender) {
+
+        by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
+                by.epam.rafalovich.archiveservice.entity.Sender.class);
+
+        senderDAOImpl.delete(senderDomain);
     }
 }

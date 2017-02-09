@@ -1,4 +1,4 @@
-package by.epam.rafalovich.archiveservice.provider.soap;
+package by.epam.rafalovich.archiveservice.provider.soap.impl;
 
 import by.epam.rafalovich.archiveservice.Archive;
 import by.epam.rafalovich.archiveservice.CriteriaList;
@@ -8,7 +8,8 @@ import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
 import by.epam.rafalovich.archiveservice.entity.OperationType;
 import by.epam.rafalovich.archiveservice.entity.Recipient;
-import by.epam.rafalovich.wsdl.archiveservice_wsdl.ArchivePortTypeNew;
+import by.epam.rafalovich.wsdl.archiveservice_wsdl.ArchivePortType;
+
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import java.util.List;
  * Created by Dzmitry_Rafalovich on 2/8/2017.
  */
 @Service
-public class ArchiveServiceImpl implements ArchivePortTypeNew {
+public class ArchiveServiceImpl implements ArchivePortType{
 
     @Autowired
     RecordDAO recordDAOImpl;
@@ -73,6 +74,5 @@ public class ArchiveServiceImpl implements ArchivePortTypeNew {
         }
 
         return archive;
-
     }
 }

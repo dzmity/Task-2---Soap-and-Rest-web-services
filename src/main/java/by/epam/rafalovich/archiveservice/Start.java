@@ -14,7 +14,7 @@ public class Start {
 
     public static void main(String[] args) {
         ApplicationContext appContext =
-                new ClassPathXmlApplicationContext("classpath:cxf/cxf-servlet.xml");
+                new ClassPathXmlApplicationContext("classpath:cxf/cxf-servlet-soap.xml");
 
         Arrays.stream(appContext.getBeanDefinitionNames()).forEach(System.out::println);
         //Session session = ((SessionFactory) appContext.getBean("sessionFactory")).getCurrentSession();
