@@ -3,6 +3,7 @@ package by.epam.rafalovich.archiveservice.provider.rest;
 import by.epam.rafalovich.archiveservice.Sender;
 import by.epam.rafalovich.archiveservice.SenderArchive;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
+import by.epam.rafalovich.archiveservice.provider.rest.impl.SenderServiceImpl;
 import org.apache.commons.collections.CollectionUtils;
 import org.dozer.Mapper;
 import org.junit.Before;

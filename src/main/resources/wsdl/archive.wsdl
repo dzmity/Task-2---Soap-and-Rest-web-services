@@ -142,9 +142,23 @@
         <part name="response" type="xsd:Archive"/>
     </message>
 
+    <!--  Find Records by CriteriaList   -->
+    <message name="FindRecordsRequest">
+        <part name="request" type="xsd:CriteriaList"/>
+    </message>
+
+    <message name="FindRecordResponse">
+        <part name="response" type="xsd:Archive"/>
+    </message>
 
 
-
+    <!--  new portType  -->
+    <portType name="ArchivePortTypeNew">
+        <operation name="searchRecords">
+            <input message="tns:FindRecordsRequest"/>
+            <output message="tns:FindRecordResponse"/>
+        </operation>
+    </portType>
 
     <portType name="ArchivePortType">
 
@@ -164,8 +178,23 @@
         </operation>
     </portType>
 
+    <!--  new binding  -->
+    <binding name="ArchiveBlindingNew" type="tns:ArchivePortTypeNew">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
+        <operation name="searchRecords">
+            <soap:operation soapAction="http://rafalovich.epam.by/wsdl/CommunicationService/searchRecords"/>
 
+            <input>
+                <soap:body use="literal" />
+            </input>
+
+            <output>
+                <soap:body use="literal" />
+            </output>
+
+        </operation>
+    </binding>
 
     <binding name="ArchiveBlinding" type="tns:ArchivePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -205,11 +234,18 @@
     </binding>
 
     <service name="ArchiveService">
-        <documentation>WSDL File for CommunicationService</documentation>
+        <documentation>WSDL File for ArchiveService</documentation>
         <port binding="tns:ArchiveBlinding" name="ArchivePort">
             <soap:address
                     location="http://localhost:8085/web-service/ws/archiveservice"/>
         </port>
+
+        <port binding="tns:ArchiveBlindingNew" name="ArchivePortNew">
+            <soap:address
+                    location="http://localhost:8085/web-service/ws/archiveservicenew"/>
+        </port>
     </service>
+
+
 
 </definitions>

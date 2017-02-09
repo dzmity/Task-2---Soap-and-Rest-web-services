@@ -1,19 +1,9 @@
 package by.epam.rafalovich.archiveservice;
 
-import by.epam.rafalovich.archiveservice.dao.GenericDAO;
-import by.epam.rafalovich.archiveservice.dao.RecordDAO;
-import by.epam.rafalovich.archiveservice.dao.SenderDAO;
-import by.epam.rafalovich.archiveservice.dao.impl.SenderDAOImpl;
-
-import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
-import by.epam.rafalovich.archiveservice.entity.OperationType;
-import by.epam.rafalovich.archiveservice.entity.Sender;
-import by.epam.rafalovich.archiveservice.entity.SenderInfo;
-import by.epam.rafalovich.archiveservice.provider.rest.SenderServiceImpl;
+import by.epam.rafalovich.archiveservice.provider.rest.impl.SenderServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -24,7 +14,7 @@ public class Start {
 
     public static void main(String[] args) {
         ApplicationContext appContext =
-                new ClassPathXmlApplicationContext("classpath:cxf/cxf-servlet-rest.xml");
+                new ClassPathXmlApplicationContext("classpath:cxf/cxf-servlet.xml");
 
         Arrays.stream(appContext.getBeanDefinitionNames()).forEach(System.out::println);
         //Session session = ((SessionFactory) appContext.getBean("sessionFactory")).getCurrentSession();

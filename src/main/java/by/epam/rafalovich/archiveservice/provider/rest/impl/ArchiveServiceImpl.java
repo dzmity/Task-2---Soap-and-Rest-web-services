@@ -1,4 +1,4 @@
-package by.epam.rafalovich.archiveservice.provider.rest;
+package by.epam.rafalovich.archiveservice.provider.rest.impl;
 
 import by.epam.rafalovich.archiveservice.*;
 import by.epam.rafalovich.archiveservice.dao.RecipientDAO;
@@ -6,6 +6,7 @@ import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.entity.*;
 import by.epam.rafalovich.archiveservice.entity.OperationType;
 import by.epam.rafalovich.archiveservice.entity.Recipient;
+import by.epam.rafalovich.archiveservice.provider.rest.IArchiveService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,44 +59,38 @@ public class ArchiveServiceImpl implements IArchiveService {
         Archive archive = new Archive();
         List<Record> recordList = archive.getRecord();
 
-        try {
+        Collection<CommunicationRecord> records;
 
-            Collection<CommunicationRecord> records;
+        if (criteriaList == null) {
 
-            if (criteriaList == null) {
+            records = recordDAOImpl.findAll();
+        } else {
 
-                records = recordDAOImpl.findAll();
-            } else {
+            String contact = criteriaList.getRecipientContact();
+            Long recipientId = null;
 
-                String contact = criteriaList.getRecipientContact();
-                Long recipientId = null;
-
-                if (contact != null) {
-                    Recipient recipient = recipientDAOImpl.findRecipientByContact(contact);
-                    recipientId = recipient != null ? recipient.getRecipientId() : null;
-                }
-
-                Long senderId = criteriaList.getSenderId() != null ? criteriaList.getSenderId().longValue() : null;
-
-                LocalDateTime start = criteriaList.getStartDateTime() != null ?
-                        mapper.map(criteriaList.getStartDateTime(), LocalDateTime.class) : null;
-
-                LocalDateTime end = criteriaList.getEndDateTime() != null ?
-                        mapper.map(criteriaList.getEndDateTime(), LocalDateTime.class) : null;
-
-                by.epam.rafalovich.archiveservice.entity.OperationType type = criteriaList.getOperationType() != null ?
-                        mapper.map(criteriaList.getOperationType(), OperationType.class) : null;
-
-                records = recordDAOImpl.findRecords(recipientId, senderId, start, end, type);
-            }
-            for (CommunicationRecord x : records) {
-                Record record = mapper.map(x, Record.class);
-                recordList.add(record);
+            if (contact != null) {
+                Recipient recipient = recipientDAOImpl.findRecipientByContact(contact);
+                recipientId = recipient != null ? recipient.getRecipientId() : null;
             }
 
+            Long senderId = criteriaList.getSenderId() != null ? criteriaList.getSenderId().longValue() : null;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            LocalDateTime start = criteriaList.getStartDateTime() != null ?
+                    mapper.map(criteriaList.getStartDateTime(), LocalDateTime.class) : null;
+
+            LocalDateTime end = criteriaList.getEndDateTime() != null ?
+                    mapper.map(criteriaList.getEndDateTime(), LocalDateTime.class) : null;
+
+            by.epam.rafalovich.archiveservice.entity.OperationType type = criteriaList.getOperationType() != null ?
+                    mapper.map(criteriaList.getOperationType(), OperationType.class) : null;
+
+            records = recordDAOImpl.findRecords(recipientId, senderId, start, end, type);
+        }
+
+        for (CommunicationRecord x : records) {
+            Record record = mapper.map(x, Record.class);
+            recordList.add(record);
         }
 
         return archive;

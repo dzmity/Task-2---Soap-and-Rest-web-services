@@ -5,6 +5,7 @@ import by.epam.rafalovich.archiveservice.OperationType;
 import by.epam.rafalovich.archiveservice.dao.RecipientDAO;
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.entity.*;
+import by.epam.rafalovich.archiveservice.provider.rest.impl.ArchiveServiceImpl;
 import org.dozer.Mapper;
 import org.junit.Before;
 import org.junit.Test;
