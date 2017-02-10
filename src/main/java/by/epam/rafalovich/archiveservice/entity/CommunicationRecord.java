@@ -19,7 +19,7 @@ public class CommunicationRecord {
 
     @Column(name = "OPERATION_ID" )
     @Enumerated(EnumType.ORDINAL)
-    private OperationType operationType;
+    private Operation operationType;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id")
     private Sender sender;
@@ -40,11 +40,11 @@ public class CommunicationRecord {
         this.recordId = recordId;
     }
 
-    public OperationType getOperationType() {
+    public Operation getOperationType() {
         return operationType;
     }
 
-    public void setOperationType(OperationType operationType) {
+    public void setOperationType(Operation operationType) {
         this.operationType = operationType;
     }
 

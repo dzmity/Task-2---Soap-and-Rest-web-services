@@ -3,6 +3,7 @@ package by.epam.rafalovich.archiveservice.converter;
 import by.epam.rafalovich.archiveservice.*;
 import by.epam.rafalovich.archiveservice.entity.CommunicationChannel;
 import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
+import by.epam.rafalovich.archiveservice.entity.Operation;
 import org.dozer.DozerBeanMapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public class RecordMappingTest {
         String dateTime = "2002-05-30T09:00:00";
 
         OperationType confirmation = OperationType.RESERVATION_CONFIRMATION;
-        by.epam.rafalovich.archiveservice.entity.OperationType operationType = by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CONFIRMATION;
+        Operation operationType = Operation.RESERVATION_CONFIRMATION;
         ChannelType sms = ChannelType.SMS;
         CommunicationChannel channel = CommunicationChannel.SMS;
 
@@ -105,7 +106,7 @@ public class RecordMappingTest {
         String dateTime = "2002-05-30T09:00:00";
 
         OperationType confirmation = OperationType.RESERVATION_CONFIRMATION;
-        by.epam.rafalovich.archiveservice.entity.OperationType operationType = by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CONFIRMATION;
+        Operation operationType = Operation.RESERVATION_CONFIRMATION;
         ChannelType sms = ChannelType.SMS;
         CommunicationChannel channel = CommunicationChannel.SMS;
 

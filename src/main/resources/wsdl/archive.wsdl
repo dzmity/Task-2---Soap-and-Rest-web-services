@@ -11,13 +11,12 @@
                 xmlns="http://www.w3.org/2001/XMLSchema"
                 xmlns:tns="http://rafalovich.epam.by/ArchiveService.xsd">
 
-            <element name="criteriaList" type="tns:CriteriaList"/>
+            <element name="recordCriteriaType" type="tns:RecordCriteriaType"/>
             <element name="archive" type="tns:Archive"/>
             <element name="senderArchive" type="tns:SenderArchive"/>
-            <element name="senderCriteriaList" type="tns:SenderCriteriaList"/>
+            <element name="senderCriteriaType" type="tns:SenderCriteriaType"/>
 
-
-            <complexType name="SenderCriteriaList">
+            <complexType name="SenderCriteriaType">
                 <choice>
                     <element name="id" type="positiveInteger" />
                     <element name="name" type="string"/>
@@ -27,15 +26,13 @@
                 </choice>
             </complexType>
 
-
             <complexType name="SenderArchive">
                 <sequence minOccurs="0" maxOccurs="1">
-                    <element name="sender" type="tns:Sender" maxOccurs="unbounded"/>
+                    <element name="sender" type="tns:SenderType" maxOccurs="unbounded"/>
                 </sequence>
             </complexType>
 
-
-            <complexType name="CriteriaList">
+            <complexType name="RecordCriteriaType">
                 <sequence minOccurs="0" maxOccurs="1">
                     <element name="senderId" type="positiveInteger" minOccurs="0"/>
                     <element name="recipientContact" type="string" minOccurs="0"/>
@@ -45,24 +42,15 @@
                 </sequence>
             </complexType>
 
-
-
-            <!--<simpleType name="SenderId">
-                <restriction base="integer">
-                    <minInclusive value="0"/>
-                    <maxInclusive value="100"/>
-                </restriction>
-            </simpleType>-->
-
-            <complexType name="Sender">
+            <complexType name="SenderType">
                 <sequence minOccurs="1" maxOccurs="1">
                     <element name="id" type="integer" minOccurs="0"/>
                     <element name="senderName" type="string"/>
-                    <element name="senderInfo" type="tns:SenderInfo"/>
+                    <element name="senderInfo" type="tns:SenderInfoType"/>
                 </sequence>
             </complexType>
 
-            <complexType name="SenderInfo">
+            <complexType name="SenderInfoType">
                 <sequence minOccurs="1" maxOccurs="1">
                     <element name="id" type="integer" minOccurs="0"/>
                     <element name="phoneNumber" type="string"/>
@@ -71,15 +59,15 @@
                 </sequence>
             </complexType>
 
-            <complexType name="Recipient">
+            <complexType name="RecipientType">
                 <sequence minOccurs="1" maxOccurs="1">
                     <element name="id" type="integer" minOccurs="0"/>
                     <element name="recipientContact" type="string"/>
-                    <element name="channelType" type="tns:ChannelType"/>
+                    <element name="channelType" type="tns:CommunicationChannelType"/>
                 </sequence>
             </complexType>
 
-            <simpleType name="ChannelType">
+            <simpleType name="CommunicationChannelType">
                 <restriction base="string">
                     <enumeration  value="SMS"/>
                     <enumeration value="EMAIL"/>
@@ -89,17 +77,16 @@
 
             <complexType name="Archive">
                 <sequence minOccurs="0" maxOccurs="1">
-                    <element name="record" type="tns:Record" maxOccurs="unbounded"/>
+                    <element name="record" type="tns:CommunicationRecordType" maxOccurs="unbounded"/>
                 </sequence>
             </complexType>
 
-            <!-- changed -->
-            <complexType name="Record">
+            <complexType name="CommunicationRecordType">
                 <sequence minOccurs="1" maxOccurs="1">
                     <element name="id" type="integer" minOccurs="0"/>
                     <element name="operation" type="tns:OperationType" minOccurs="0"/>
-                    <element name="sender" type="tns:Sender" minOccurs="0"/>
-                    <element name="recipient" type="tns:Recipient" minOccurs="0"/>
+                    <element name="sender" type="tns:SenderType" minOccurs="0"/>
+                    <element name="recipient" type="tns:RecipientType" minOccurs="0"/>
                     <element name="dateTime" type="dateTime" minOccurs="0"/>
                 </sequence>
             </complexType>
@@ -111,17 +98,16 @@
                     <enumeration value="RESERVATION_CHANGING"/>
                 </restriction>
             </simpleType>
-
         </schema>
     </types>
 
 
     <!--findSender by criteriaList-->
     <message name="FindSenderRequest">
-        <part name="senderRequest" type="xsd:SenderCriteriaList"/>
+        <part name="senderRequest" type="xsd:SenderCriteriaType"/>
     </message>
     <message name="FindSenderResponse">
-        <part name="senderResponse" type="xsd:Sender"/>
+        <part name="senderResponse" type="xsd:SenderType"/>
     </message>
 
     <!--find all senders-->
@@ -133,28 +119,28 @@
 
     <!--delete senders-->
     <message name="DeleteRequest">
-        <part name="deleteRequest" type="xsd:Sender"/>
+        <part name="deleteRequest" type="xsd:SenderType"/>
     </message>
     <message name="DeleteResponse">
     </message>
 
     <!--update senders-->
     <message name="UpdateRequest">
-        <part name="updateRequest" type="xsd:Sender"/>
+        <part name="updateRequest" type="xsd:SenderType"/>
     </message>
     <message name="UpdateResponse">
     </message>
 
     <!--create senders-->
     <message name="CreateRequest">
-        <part name="createRequest" type="xsd:Sender"/>
+        <part name="createRequest" type="xsd:SenderType"/>
     </message>
     <message name="CreateResponse">
     </message>
 
     <!--  Find Records by CriteriaList   -->
     <message name="FindRecordsRequest">
-        <part name="request" type="xsd:CriteriaList"/>
+        <part name="request" type="xsd:RecordCriteriaType"/>
     </message>
     <message name="FindRecordResponse">
         <part name="response" type="xsd:Archive"/>
@@ -167,10 +153,7 @@
             <input message="tns:FindRecordsRequest"/>
             <output message="tns:FindRecordResponse"/>
         </operation>
-    </portType>
 
-    <!--  sender portType  -->
-    <portType name="SenderPortType">
         <operation name="findSenders">
             <input message="tns:Empty"/>
             <output message="tns:FindAllSendersResponse"/>
@@ -210,11 +193,6 @@
                     <soap:body use="literal" />
                 </output>
         </operation>
-    </binding>
-
-    <!--  sender binding  -->
-    <binding name="SenderBinding" type="tns:SenderPortType">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
         <operation name="findSenders">
             <soap:operation soapAction="http://rafalovich.epam.by/soap/findSenders"/>
@@ -265,21 +243,12 @@
         </operation>
     </binding>
 
-
-
+    <!--  archive service  -->
     <service name="ArchiveService">
         <documentation>WSDL File for ArchiveService</documentation>
-        <port binding="tns:SenderBinding" name="SenderPort">
-            <soap:address
-                    location="http://localhost:8085/soap/senderservice"/>
-        </port>
-
         <port binding="tns:ArchiveBinding" name="ArchivePort">
-            <soap:address
-                    location="http://localhost:8085/soap/archiveservice"/>
+            <soap:address location=""/>
         </port>
     </service>
-
-
 
 </definitions>

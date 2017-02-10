@@ -1,14 +1,12 @@
 package by.epam.rafalovich.archiveservice.provider.rest.impl;
 
-import by.epam.rafalovich.archiveservice.Sender;
-import by.epam.rafalovich.archiveservice.SenderArchive;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
+import by.epam.rafalovich.archiveservice.entity.Sender;
 import by.epam.rafalovich.archiveservice.provider.rest.ISenderService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,51 +22,33 @@ public class SenderServiceImpl implements ISenderService {
     private Mapper mapper;
 
     @Override
-    public SenderArchive findAllSenders() {
+    public List<Sender> findAllSenders() {
 
-        SenderArchive archive = new SenderArchive();
-        List<Sender> senders = archive.getSender();
-
-        Collection<by.epam.rafalovich.archiveservice.entity.Sender> collection = senderDAOImpl.findAll();
-
-        for (by.epam.rafalovich.archiveservice.entity.Sender x : collection) {
-            Sender sender = mapper.map(x, Sender.class);
-            senders.add(sender);
-        }
-
-        return archive;
+        return senderDAOImpl.findAll();
     }
 
     @Override
     public void updateSender(Sender sender) {
 
-        by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
-                by.epam.rafalovich.archiveservice.entity.Sender.class);
-
-        senderDAOImpl.update(senderDomain);
+        senderDAOImpl.update(sender);
     }
 
     @Override
     public void createSender(Sender sender) {
 
-        by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
-                by.epam.rafalovich.archiveservice.entity.Sender.class);
-
-        senderDAOImpl.create(senderDomain);
+        senderDAOImpl.create(sender);
     }
 
     @Override
-    public void deleteSender(Sender sender) {
+    public void deleteSender(long senderId) {
 
-        by.epam.rafalovich.archiveservice.entity.Sender senderDomain = mapper.map(sender,
-                by.epam.rafalovich.archiveservice.entity.Sender.class);
-
-        senderDAOImpl.delete(senderDomain);
+        Sender sender = findSender(senderId);
+        senderDAOImpl.delete(sender);
     }
 
     @Override
-    public Sender findSender(int senderId) {
+    public Sender findSender(long senderId) {
 
-        return  mapper.map(senderDAOImpl.findById((long) senderId), Sender.class);
+        return senderDAOImpl.findById(senderId);
     }
 }

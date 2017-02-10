@@ -8,7 +8,7 @@
         <custom-converters>
             <converter type="by.epam.rafalovich.archiveservice.converter.EnumConverter">
                 <class-a>by.epam.rafalovich.archiveservice.OperationType</class-a>
-                <class-b>by.epam.rafalovich.archiveservice.entity.OperationType</class-b>
+                <class-b>by.epam.rafalovich.archiveservice.entity.Operation</class-b>
             </converter>
             <converter type="by.epam.rafalovich.archiveservice.converter.DateTimeConverter">
                 <class-a>javax.xml.datatype.XMLGregorianCalendar</class-a>

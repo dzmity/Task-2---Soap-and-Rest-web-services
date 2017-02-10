@@ -44,7 +44,7 @@ public class Start {
         System.out.println(records.size());*/
 
         /*CommunicationRecord record = new CommunicationRecord();
-        record.setOperationType(OperationType.RESERVATION_CANCELLATION);
+        record.setOperationType(Operation.RESERVATION_CANCELLATION);
         record.setDateTime(LocalDateTime.now());
 
 

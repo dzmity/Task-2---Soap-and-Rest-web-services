@@ -66,8 +66,8 @@ public class ArchiveServiceImplTest {
         Collection<Record> records = new ArrayList<>();
         records.add(record);
 
-        by.epam.rafalovich.archiveservice.entity.OperationType domainType =
-                by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CANCELLATION;
+        Operation domainType =
+                Operation.RESERVATION_CANCELLATION;
         LocalDateTime startDT = LocalDateTime.now().minusYears(yearsAgo);
         LocalDateTime endDT = LocalDateTime.now();
 
@@ -84,7 +84,7 @@ public class ArchiveServiceImplTest {
 
         when ( mapper.map(start, LocalDateTime.class) ).thenReturn( startDT );
         when ( mapper.map(end, LocalDateTime.class) ).thenReturn( endDT );
-        when ( mapper.map(operationType, by.epam.rafalovich.archiveservice.entity.OperationType.class) ).thenReturn( domainType );
+        when ( mapper.map(operationType, Operation.class) ).thenReturn( domainType );
         when ( mapper.map(domainRecord, Record.class) ).thenReturn( record );
         when ( recipientDAO.findRecipientByContact(recipientContact) ).thenReturn( domainRecipient );
         when ( recordDAO.findRecords(senderId, recipientId, startDT, endDT, domainType) ).thenReturn( domainRecords );

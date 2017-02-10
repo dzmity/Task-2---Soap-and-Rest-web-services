@@ -2,8 +2,9 @@ package by.epam.rafalovich.archiveservice.dao.impl;
 
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
-import by.epam.rafalovich.archiveservice.entity.OperationType;
+import by.epam.rafalovich.archiveservice.entity.Operation;
 
+import by.epam.rafalovich.archiveservice.entity.RecordCriteria;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
@@ -41,7 +42,7 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
 
     @Override
     public Collection<CommunicationRecord> findRecords(Long senderId, Long recipientId, LocalDateTime startDateTime,
-                                                       LocalDateTime endDateTime, OperationType type) {
+                                                       LocalDateTime endDateTime, Operation type) {
 
         LocalDateTime start = startDateTime != null ? startDateTime : LocalDateTime.of(
                 START_YEAR, START_MONTH, START_DAY, START_HOUR, START_MINUTE);
@@ -54,5 +55,10 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
         criteria.add(Restrictions.between("dateTime", start,end));
 
         return criteria.list();
+    }
+
+    @Override
+    public Collection<CommunicationRecord> findRecords(RecordCriteria recordCriteria) {
+        return null;
     }
 }

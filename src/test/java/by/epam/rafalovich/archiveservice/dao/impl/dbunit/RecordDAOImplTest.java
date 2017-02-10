@@ -39,7 +39,7 @@ public class RecordDAOImplTest {
 
     private CommunicationRecord initRecord() {
 
-        OperationType type = OperationType.RESERVATION_CANCELLATION;
+        Operation type = Operation.RESERVATION_CANCELLATION;
         Long recipientId = 1L;
         CommunicationChannel channel = CommunicationChannel.SMS;
         String recipientContact = "+375336012781";
@@ -86,8 +86,8 @@ public class RecordDAOImplTest {
         recordDAOImpl.create(record);
 
         List<CommunicationRecord> result = recordDAOImpl.findAll();
-        assertPropertyLenientEquals("operationType", Arrays.asList(OperationType.RESERVATION_CHANGING,
-                OperationType.RESERVATION_CANCELLATION), result);
+        assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING,
+                Operation.RESERVATION_CANCELLATION), result);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class RecordDAOImplTest {
         Long id = 1L;
 
         CommunicationRecord result = recordDAOImpl.findById(id);
-        assertPropertyLenientEquals("operationType", OperationType.RESERVATION_CHANGING, result);
+        assertPropertyLenientEquals("operationType", Operation.RESERVATION_CHANGING, result);
         assertPropertyLenientEquals("sender.senderId", 2L, result);
         assertPropertyLenientEquals("recipient.recipientId", 2L, result);
     }
@@ -142,7 +142,7 @@ public class RecordDAOImplTest {
     public void findAll() throws Exception {
 
         List<CommunicationRecord> result = recordDAOImpl.findAll();
-        assertPropertyLenientEquals("operationType", Arrays.asList(OperationType.RESERVATION_CHANGING), result);
+        assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING), result);
         assertPropertyLenientEquals("sender.senderId", Arrays.asList(2L), result);
         assertPropertyLenientEquals("recipient.recipientId", Arrays.asList(2L), result);
     }
@@ -154,7 +154,7 @@ public class RecordDAOImplTest {
         Long id = 2L;
 
         List<CommunicationRecord> result = (List<CommunicationRecord>) recordDAOImpl.findRecordsBySender(2L);
-        assertPropertyLenientEquals("operationType", Arrays.asList(OperationType.RESERVATION_CHANGING), result);
+        assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING), result);
         assertPropertyLenientEquals("recipient.recipientId", Arrays.asList(2L), result);
     }
 
@@ -165,7 +165,7 @@ public class RecordDAOImplTest {
         Long id = 2L;
 
         List<CommunicationRecord> result = (List<CommunicationRecord>) recordDAOImpl.findRecordsByRecipient(2L);
-        assertPropertyLenientEquals("operationType", Arrays.asList(OperationType.RESERVATION_CHANGING), result);
+        assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING), result);
         assertPropertyLenientEquals("sender.senderId", Arrays.asList(2L), result);
     }
 

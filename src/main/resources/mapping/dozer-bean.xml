@@ -10,16 +10,6 @@
         http://cxf.apache.org/jaxws
         http://cxf.apache.org/schemas/jaxws.xsd">
 
-    <bean class="org.dozer.spring.DozerBeanMapperFactoryBean" name="dozerFactoryBean">
-        <property name="mappingFiles"
-                  value="classpath:mapping/dozer_mapping.xml"/>
-        <property name="customConverters">
-            <list>
-                <bean class="by.epam.rafalovich.archiveservice.converter.EnumConverter"/>
-                <bean class="by.epam.rafalovich.archiveservice.converter.DateTimeConverter"/>
-            </list>
-        </property>
-    </bean>
 
     <bean id="org.dozer.Mapper" name="mapper" class="org.dozer.DozerBeanMapper">
         <property name="mappingFiles"

@@ -1,6 +1,7 @@
 package by.epam.rafalovich.archiveservice.converter;
 
 import by.epam.rafalovich.archiveservice.OperationType;
+import by.epam.rafalovich.archiveservice.entity.Operation;
 import org.dozer.DozerBeanMapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,18 +31,18 @@ public class OperationTypeMappingTest {
 
         OperationType cancellation = OperationType.RESERVATION_CANCELLATION;
 
-        by.epam.rafalovich.archiveservice.entity.OperationType result =
-                mapper.map(cancellation, by.epam.rafalovich.archiveservice.entity.OperationType.class);
+        Operation result =
+                mapper.map(cancellation, Operation.class);
 
         assertNotNull(result);
-        assertEquals(result, by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CANCELLATION);
+        assertEquals(result, Operation.RESERVATION_CANCELLATION);
     }
 
     @Test
     public void testCancellationOOperationTypeUnmarshalling() {
 
-        by.epam.rafalovich.archiveservice.entity.OperationType cancellation =
-                by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CANCELLATION;
+        Operation cancellation =
+                Operation.RESERVATION_CANCELLATION;
 
         OperationType result = mapper.map(cancellation, OperationType.class);
 
@@ -54,18 +55,18 @@ public class OperationTypeMappingTest {
 
         OperationType cancellation = OperationType.RESERVATION_CONFIRMATION;
 
-        by.epam.rafalovich.archiveservice.entity.OperationType result =
-                mapper.map(cancellation, by.epam.rafalovich.archiveservice.entity.OperationType.class);
+        Operation result =
+                mapper.map(cancellation, Operation.class);
 
         assertNotNull(result);
-        assertEquals(result, by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CONFIRMATION);
+        assertEquals(result, Operation.RESERVATION_CONFIRMATION);
     }
 
     @Test
     public void testConfirmationOOperationTypeUnmarshalling() {
 
-        by.epam.rafalovich.archiveservice.entity.OperationType cancellation =
-                by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CONFIRMATION;
+        Operation cancellation =
+                Operation.RESERVATION_CONFIRMATION;
 
         OperationType result = mapper.map(cancellation, OperationType.class);
 
@@ -78,18 +79,18 @@ public class OperationTypeMappingTest {
 
         OperationType cancellation = OperationType.RESERVATION_CHANGING;
 
-        by.epam.rafalovich.archiveservice.entity.OperationType result =
-                mapper.map(cancellation, by.epam.rafalovich.archiveservice.entity.OperationType.class);
+        Operation result =
+                mapper.map(cancellation, Operation.class);
 
         assertNotNull(result);
-        assertEquals(result, by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CHANGING);
+        assertEquals(result, Operation.RESERVATION_CHANGING);
     }
 
     @Test
     public void testChangingOOperationTypeUnmarshalling() {
 
-        by.epam.rafalovich.archiveservice.entity.OperationType cancellation =
-                by.epam.rafalovich.archiveservice.entity.OperationType.RESERVATION_CHANGING;
+        Operation cancellation =
+                Operation.RESERVATION_CHANGING;
 
         OperationType result = mapper.map(cancellation, OperationType.class);
 

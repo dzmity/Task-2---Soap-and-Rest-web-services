@@ -1,13 +1,12 @@
 package by.epam.rafalovich.archiveservice.provider.rest;
 
-import by.epam.rafalovich.archiveservice.Archive;
-import by.epam.rafalovich.archiveservice.CriteriaList;
-import by.epam.rafalovich.archiveservice.OperationType;
+import by.epam.rafalovich.archiveservice.entity.CommunicationRecord;
+import by.epam.rafalovich.archiveservice.entity.Operation;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by Dzmitry_Rafalovich on 2/6/2017.
@@ -16,26 +15,13 @@ import java.math.BigInteger;
 public interface IArchiveService {
 
     @GET
-    @Path("/findrecordsBySender/{senderId}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/records")
     @Produces(MediaType.APPLICATION_JSON)
-    Archive findRecordsBySender(@PathParam("senderId")long senderId);
-
-    @POST
-    @Path("/findrecordsJSON")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    Archive findRecordsJSON(CriteriaList criteriaList);
-
-    @GET
-    @Path("/findrecords")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-    Archive findRecords(
-            @QueryParam("senderId") BigInteger senderId,
+    List<CommunicationRecord> findRecords(
+            @QueryParam("senderId") Long senderId,
             @QueryParam("recipientContact") String recipientContact,
-            @QueryParam("startDateTime") XMLGregorianCalendar startDateTime,
-            @QueryParam("endDateTime") XMLGregorianCalendar endDateTime,
-            @QueryParam("operationType") OperationType operationType);
+            @QueryParam("startDateTime") LocalDateTime startDateTime,
+            @QueryParam("endDateTime") LocalDateTime endDateTime,
+            @QueryParam("operationType") Operation operationType);
 
 }

@@ -18,13 +18,7 @@
     <import resource="classpath:mapping/dozer-bean.xml" />
 
     <jaxws:endpoint
-            id="sampleWebService"
-            implementor="by.epam.rafalovich.archiveservice.provider.soap.impl.SenderServiceImpl"
-            address="/soap/senderservice" />
-
-    <jaxws:endpoint
             id="archiveService"
             implementor="by.epam.rafalovich.archiveservice.provider.soap.impl.ArchiveServiceImpl"
             address="soap/archiveservice" />
-
 </beans>

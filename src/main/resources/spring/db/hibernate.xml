@@ -23,7 +23,7 @@
 
         <property name="hibernateProperties">
             <props>
-                <prop key="#{T(org.hibernate.cfg.AvailableSettings).DIALECT}">${hibernate.dialect}</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="#{T(org.hibernate.cfg.AvailableSettings).SHOW_SQL}">${hibernate.show_sql}</prop>
             </props>
         </property>
