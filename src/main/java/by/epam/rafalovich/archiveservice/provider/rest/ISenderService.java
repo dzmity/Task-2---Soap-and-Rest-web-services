@@ -18,7 +18,7 @@ public interface ISenderService {
     List<Sender> findAllSenders();
 
     @GET
-    @Path("/sender/{senderId}")
+    @Path("/senders/{senderId}")
     @Produces(MediaType.APPLICATION_JSON)
     Sender findSender(@PathParam("senderId") long senderId);
 

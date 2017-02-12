@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class CommunicationRecord {
     @Id
     @Column(name = "transaction_id")
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "transaction_seq_gen")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq_gen")
     @SequenceGenerator(name = "transaction_seq_gen", sequenceName = "transaction_sequence" , initialValue = 1, allocationSize = 1)
     private Long recordId;
 

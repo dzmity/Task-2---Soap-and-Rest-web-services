@@ -6,7 +6,6 @@ import by.epam.rafalovich.archiveservice.entity.*;
 import by.epam.rafalovich.archiveservice.entity.Operation;
 import by.epam.rafalovich.archiveservice.entity.Recipient;
 import by.epam.rafalovich.archiveservice.provider.rest.IArchiveService;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +24,8 @@ public class ArchiveServiceImpl implements IArchiveService {
     @Autowired
     RecipientDAO recipientDAOImpl;
 
-    @Autowired
-    private Mapper mapper;
-
     @Override
-    public List<CommunicationRecord> findRecords(Long senderId,  String recipientContact, LocalDateTime startDateTime,
+    public List<CommunicationRecord> findRecords(Long senderId, String recipientContact, LocalDateTime startDateTime,
                                                  LocalDateTime endDateTime, Operation operation) {
 
         Long recipientId = null;
@@ -39,6 +35,14 @@ public class ArchiveServiceImpl implements IArchiveService {
             recipientId = recipient != null ? recipient.getRecipientId() : null;
         }
 
-       return (List) recordDAOImpl.findRecords(senderId, recipientId, startDateTime, endDateTime, operation);
+        RecordCriteria recordCriteria = new RecordCriteria();
+        recordCriteria.setSenderId(senderId);
+        recordCriteria.setOperationType(operation);
+        recordCriteria.setRecipientId(recipientId);
+        recordCriteria.setStartDateTime(startDateTime);
+        recordCriteria.setEndDateTime(endDateTime);
+
+        return (List) recordDAOImpl.findRecords(recordCriteria);
+       //return (List) recordDAOImpl.findRecords(senderId, recipientId, startDateTime, endDateTime, operation);
     }
 }

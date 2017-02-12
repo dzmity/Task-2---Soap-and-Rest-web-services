@@ -33,8 +33,8 @@ public class Start {
 
 
        SenderServiceImpl senderService = (SenderServiceImpl) appContext.getBean("senderService");
-       Collection<by.epam.rafalovich.archiveservice.Sender> senders = senderService.findAllSenders().getSender();
-        System.out.println(senders.size());
+      // Collection<by.epam.rafalovich.archiveservice.Sender> senders = senderService.findAllSenders().getSender();
+       // System.out.println(senders.size());
 
 
         //GenericDAO<CommunicationRecord> recordDAO = new RecordDAOImpl();

@@ -3,7 +3,6 @@ package by.epam.rafalovich.archiveservice.provider.rest.impl;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
 import by.epam.rafalovich.archiveservice.entity.Sender;
 import by.epam.rafalovich.archiveservice.provider.rest.ISenderService;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,6 @@ public class SenderServiceImpl implements ISenderService {
 
     @Autowired
     private SenderDAO senderDAOImpl;
-
-    @Autowired
-    private Mapper mapper;
 
     @Override
     public List<Sender> findAllSenders() {

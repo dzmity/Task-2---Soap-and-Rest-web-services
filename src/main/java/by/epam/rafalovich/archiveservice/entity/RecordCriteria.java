@@ -52,4 +52,30 @@ public class RecordCriteria {
     public void setEndDateTime(LocalDateTime endDateTime) {
         this.endDateTime = endDateTime;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RecordCriteria that = (RecordCriteria) o;
+
+        if (senderId != null ? !senderId.equals(that.senderId) : that.senderId != null) return false;
+        if (recipientId != null ? !recipientId.equals(that.recipientId) : that.recipientId != null) return false;
+        if (operationType != that.operationType) return false;
+        if (startDateTime != null ? !startDateTime.equals(that.startDateTime) : that.startDateTime != null)
+            return false;
+        return endDateTime != null ? endDateTime.equals(that.endDateTime) : that.endDateTime == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = senderId != null ? senderId.hashCode() : 0;
+        result = 31 * result + (recipientId != null ? recipientId.hashCode() : 0);
+        result = 31 * result + (operationType != null ? operationType.hashCode() : 0);
+        result = 31 * result + (startDateTime != null ? startDateTime.hashCode() : 0);
+        result = 31 * result + (endDateTime != null ? endDateTime.hashCode() : 0);
+        return result;
+    }
 }

@@ -64,6 +64,7 @@ public class Sender {
 
     @Override
     public int hashCode() {
+
         return HashCodeBuilder.reflectionHashCode(this);
     }
 }

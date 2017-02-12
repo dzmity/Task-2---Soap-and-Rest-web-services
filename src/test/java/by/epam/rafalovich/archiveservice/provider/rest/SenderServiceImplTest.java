@@ -1,6 +1,6 @@
 package by.epam.rafalovich.archiveservice.provider.rest;
 
-import by.epam.rafalovich.archiveservice.Sender;
+
 import by.epam.rafalovich.archiveservice.SenderArchive;
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
 import by.epam.rafalovich.archiveservice.provider.rest.impl.SenderServiceImpl;
@@ -40,7 +40,7 @@ public class SenderServiceImplTest {
 
     }
 
-    private List<by.epam.rafalovich.archiveservice.entity.Sender> createTestDomainCollection() {
+    /*private List<by.epam.rafalovich.archiveservice.entity.Sender> createTestDomainCollection() {
 
         int collectionsSize = 5;
 
@@ -182,6 +182,6 @@ public class SenderServiceImplTest {
         verify(mapper, times(1)).map(domainSender, Sender.class);
         verifyNoMoreInteractions(senderDAOImpl);
         verifyNoMoreInteractions(mapper);
-    }
+    }*/
 
 }

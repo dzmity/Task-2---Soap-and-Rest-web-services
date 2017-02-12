@@ -19,6 +19,6 @@
 
     <jaxws:endpoint
             id="archiveService"
-            implementor="by.epam.rafalovich.archiveservice.provider.soap.impl.ArchiveServiceImpl"
+            implementor="by.epam.rafalovich.archiveservice.provider.soap.impl.NewArchiveService"
             address="soap/archiveservice" />
 </beans>

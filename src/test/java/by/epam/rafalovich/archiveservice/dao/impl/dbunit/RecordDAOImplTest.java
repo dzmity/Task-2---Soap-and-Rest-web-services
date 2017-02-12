@@ -147,7 +147,7 @@ public class RecordDAOImplTest {
         assertPropertyLenientEquals("recipient.recipientId", Arrays.asList(2L), result);
     }
 
-    @Test
+    /*@Test
     @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findRecordsBySender() throws Exception {
 
@@ -156,9 +156,9 @@ public class RecordDAOImplTest {
         List<CommunicationRecord> result = (List<CommunicationRecord>) recordDAOImpl.findRecordsBySender(2L);
         assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING), result);
         assertPropertyLenientEquals("recipient.recipientId", Arrays.asList(2L), result);
-    }
+    }*/
 
-    @Test
+    /*@Test
     @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findRecordsByRecipient() throws Exception {
 
@@ -167,6 +167,6 @@ public class RecordDAOImplTest {
         List<CommunicationRecord> result = (List<CommunicationRecord>) recordDAOImpl.findRecordsByRecipient(2L);
         assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING), result);
         assertPropertyLenientEquals("sender.senderId", Arrays.asList(2L), result);
-    }
+    }*/
 
 }

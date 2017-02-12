@@ -6,7 +6,6 @@ import by.epam.rafalovich.archiveservice.entity.Operation;
 
 import by.epam.rafalovich.archiveservice.entity.RecordCriteria;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,21 +27,13 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
     private static final int START_MINUTE= 0;
 
     @Override
-    public Collection<CommunicationRecord> findRecordsBySender(Long senderId) {
-        Query query = currentSession().getNamedQuery("findBySender").setLong("senderId", senderId);
-        return  query.list();
-    }
+    public Collection<CommunicationRecord> findRecords(RecordCriteria recordCriteria) {
 
-    @Override
-    public Collection<CommunicationRecord> findRecordsByRecipient(Long recipientId) {
-
-        Query query = currentSession().getNamedQuery("findByRecipient").setLong("recipientId", recipientId);
-        return  query.list();
-    }
-
-    @Override
-    public Collection<CommunicationRecord> findRecords(Long senderId, Long recipientId, LocalDateTime startDateTime,
-                                                       LocalDateTime endDateTime, Operation type) {
+        Long senderId = recordCriteria.getSenderId();
+        Long recipientId = recordCriteria.getRecipientId();
+        LocalDateTime startDateTime = recordCriteria.getStartDateTime();
+        LocalDateTime endDateTime = recordCriteria.getEndDateTime();
+        Operation type = recordCriteria.getOperationType();
 
         LocalDateTime start = startDateTime != null ? startDateTime : LocalDateTime.of(
                 START_YEAR, START_MONTH, START_DAY, START_HOUR, START_MINUTE);
@@ -55,10 +46,5 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
         criteria.add(Restrictions.between("dateTime", start,end));
 
         return criteria.list();
-    }
-
-    @Override
-    public Collection<CommunicationRecord> findRecords(RecordCriteria recordCriteria) {
-        return null;
     }
 }
