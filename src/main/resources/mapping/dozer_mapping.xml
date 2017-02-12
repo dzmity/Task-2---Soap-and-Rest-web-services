@@ -10,6 +10,10 @@
                 <class-a>by.epam.rafalovich.archiveservice.OperationType</class-a>
                 <class-b>by.epam.rafalovich.archiveservice.entity.Operation</class-b>
             </converter>
+            <converter type="by.epam.rafalovich.archiveservice.converter.EnumConverter">
+                <class-a>by.epam.rafalovich.archiveservice.CommunicationChannelType</class-a>
+                <class-b>by.epam.rafalovich.archiveservice.entity.CommunicationChannel</class-b>
+            </converter>
             <converter type="by.epam.rafalovich.archiveservice.converter.DateTimeConverter">
                 <class-a>javax.xml.datatype.XMLGregorianCalendar</class-a>
                 <class-b>java.time.LocalDateTime</class-b>
@@ -17,7 +21,7 @@
         </custom-converters>
     </configuration>
     <mapping>
-        <class-a>by.epam.rafalovich.archiveservice.SenderInfo</class-a>
+        <class-a>by.epam.rafalovich.archiveservice.SenderInfoType</class-a>
         <class-b>by.epam.rafalovich.archiveservice.entity.SenderInfo</class-b>
         <field>
             <a>id</a>
@@ -38,7 +42,7 @@
     </mapping>
 
     <mapping>
-        <class-a>by.epam.rafalovich.archiveservice.Sender</class-a>
+        <class-a>by.epam.rafalovich.archiveservice.SenderType</class-a>
         <class-b>by.epam.rafalovich.archiveservice.entity.Sender</class-b>
         <field>
             <a>id</a>
@@ -60,7 +64,7 @@
     </mapping>
 
     <mapping>
-        <class-a>by.epam.rafalovich.archiveservice.Recipient</class-a>
+        <class-a>by.epam.rafalovich.archiveservice.RecipientType</class-a>
         <class-b>by.epam.rafalovich.archiveservice.entity.Recipient</class-b>
         <field>
             <a>id</a>
@@ -77,7 +81,7 @@
     </mapping>
 
     <mapping>
-        <class-a>by.epam.rafalovich.archiveservice.Record</class-a>
+        <class-a>by.epam.rafalovich.archiveservice.CommunicationRecordType</class-a>
         <class-b>by.epam.rafalovich.archiveservice.entity.CommunicationRecord</class-b>
         <field>
             <a>id</a>
@@ -99,6 +103,11 @@
             <a>dateTime</a>
             <b>dateTime</b>
         </field>
+    </mapping>
+
+    <mapping>
+        <class-a>by.epam.rafalovich.archiveservice.RecordCriteriaType</class-a>
+        <class-b>by.epam.rafalovich.archiveservice.entity.RecordCriteria</class-b>
     </mapping>
 
 </mappings>
