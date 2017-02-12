@@ -1,8 +1,6 @@
 package by.epam.rafalovich.archiveservice.converter;
 
-
 import by.epam.rafalovich.archiveservice.CommunicationChannelType;
-
 import by.epam.rafalovich.archiveservice.RecipientType;
 import by.epam.rafalovich.archiveservice.entity.CommunicationChannel;
 import by.epam.rafalovich.archiveservice.entity.Recipient;

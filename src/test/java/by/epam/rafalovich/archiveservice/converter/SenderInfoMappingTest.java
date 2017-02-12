@@ -1,6 +1,8 @@
 package by.epam.rafalovich.archiveservice.converter;
 
-import by.epam.rafalovich.archiveservice.SenderInfo;
+
+import by.epam.rafalovich.archiveservice.SenderInfoType;
+import by.epam.rafalovich.archiveservice.entity.SenderInfo;
 import org.dozer.DozerBeanMapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,46 +29,44 @@ public class SenderInfoMappingTest {
         mapper.setMappingFiles(Arrays.asList(PATH));
     }
 
-
     @Test
-    public void testSenderInfoMarshalling() {
+    public void testSenderInfoTypeMapping() {
 
         long id = 12L;
         String fax = "123";
         String email = "qwerty@gmail.com";
         String number = "+375336012781";
 
-        SenderInfo dto = new SenderInfo();
+        SenderInfoType dto = new SenderInfoType();
         dto.setId(BigInteger.valueOf(id));
         dto.setFax(fax);
         dto.setEmail(email);
         dto.setPhoneNumber(number);
 
-        by.epam.rafalovich.archiveservice.entity.SenderInfo domen =
-                mapper.map(dto, by.epam.rafalovich.archiveservice.entity.SenderInfo.class);
+        SenderInfo domain = mapper.map(dto, SenderInfo.class);
 
-        assertTrue(domen.getId() == id);
-        assertEquals(domen.getSenderFax(), dto.getFax());
-        assertEquals(domen.getSenderEmail(), dto.getEmail());
+        assertTrue(domain.getId() == id);
+        assertEquals(domain.getSenderFax(), dto.getFax());
+        assertEquals(domain.getSenderEmail(), dto.getEmail());
     }
 
     @Test
-    public void testSenderInfoUnmarshalling() {
+    public void testSenderInfoeMapping() {
 
         long id = 12L;
         String fax = "123";
         String email = "qwerty@gmail.com";
         String number = "+375336012781";
 
-        by.epam.rafalovich.archiveservice.entity.SenderInfo domen = new by.epam.rafalovich.archiveservice.entity.SenderInfo();
-        domen.setId(id);
-        domen.setSenderEmail(email);
-        domen.setSenderFax(fax);
-        domen.setSenderPhoneNumber(number);
+        SenderInfo domain = new SenderInfo();
+        domain.setId(id);
+        domain.setSenderEmail(email);
+        domain.setSenderFax(fax);
+        domain.setSenderPhoneNumber(number);
 
-        SenderInfo dto = mapper.map(domen, by.epam.rafalovich.archiveservice.SenderInfo.class);
+        SenderInfoType dto = mapper.map(domain, SenderInfoType.class);
         assertSame(dto.getId(), BigInteger.valueOf(id));
-        assertEquals(domen.getSenderFax(), dto.getFax());
-        assertEquals(domen.getSenderEmail(), dto.getEmail());
+        assertEquals(domain.getSenderFax(), dto.getFax());
+        assertEquals(domain.getSenderEmail(), dto.getEmail());
     }
 }

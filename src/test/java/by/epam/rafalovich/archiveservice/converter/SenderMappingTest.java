@@ -1,7 +1,10 @@
 package by.epam.rafalovich.archiveservice.converter;
 
-import by.epam.rafalovich.archiveservice.Sender;
-import by.epam.rafalovich.archiveservice.SenderInfo;
+
+import by.epam.rafalovich.archiveservice.SenderInfoType;
+import by.epam.rafalovich.archiveservice.SenderType;
+import by.epam.rafalovich.archiveservice.entity.Sender;
+import by.epam.rafalovich.archiveservice.entity.SenderInfo;
 import org.dozer.DozerBeanMapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,7 +31,7 @@ public class SenderMappingTest {
     }
 
     @Test
-    public void testSenderMarshalling() {
+    public void testSenderTypeMapping() {
 
         long id = 10L;
         String name = "hotel";
@@ -36,35 +39,35 @@ public class SenderMappingTest {
         String email = "qwerty@gmail.com";
         String number = "+375336012781";
 
-        Sender dto = new Sender();
-        by.epam.rafalovich.archiveservice.entity.Sender domen = new by.epam.rafalovich.archiveservice.entity.Sender();
-        domen.setSenderId(id);
-        domen.setSenderName(name);
+        SenderType dto = new SenderType();
+        Sender domain = new Sender();
+        domain.setSenderId(id);
+        domain.setSenderName(name);
 
-        SenderInfo dtoInfo = new SenderInfo();
-        by.epam.rafalovich.archiveservice.entity.SenderInfo domenInfo = new by.epam.rafalovich.archiveservice.entity.SenderInfo();
+        SenderInfoType dtoInfo = new SenderInfoType();
+        SenderInfo domainInfo = new SenderInfo();
         dto.setId(BigInteger.valueOf(id));
         dto.setSenderName(name);
 
         dtoInfo.setId(BigInteger.valueOf(id));
-        domenInfo.setId(id);
+        domainInfo.setId(id);
         dtoInfo.setPhoneNumber(number);
-        domenInfo.setSenderPhoneNumber(number);
+        domainInfo.setSenderPhoneNumber(number);
         dtoInfo.setEmail(email);
-        domenInfo.setSenderEmail(email);
+        domainInfo.setSenderEmail(email);
         dtoInfo.setFax(fax);
-        domenInfo.setSenderFax(fax);
+        domainInfo.setSenderFax(fax);
 
         dto.setSenderInfo(dtoInfo);
-        domen.setInfo(domenInfo);
+        domain.setInfo(domainInfo);
 
-        by.epam.rafalovich.archiveservice.entity.Sender result = mapper.map(dto, by.epam.rafalovich.archiveservice.entity.Sender.class);
+        Sender result = mapper.map(dto, Sender.class);
 
-        assertEquals(domen, result);
+        assertEquals(domain, result);
     }
 
     @Test
-    public void testSenderUnmarshalling() {
+    public void testSenderMapping() {
 
         long id = 11L;
         String name = "hotel_california";
@@ -73,18 +76,18 @@ public class SenderMappingTest {
         String number = "+375336012781";
 
 
-        by.epam.rafalovich.archiveservice.entity.Sender domen = new by.epam.rafalovich.archiveservice.entity.Sender();
-        domen.setSenderId(id);
-        domen.setSenderName(name);
+        Sender domain = new Sender();
+        domain.setSenderId(id);
+        domain.setSenderName(name);
 
-        by.epam.rafalovich.archiveservice.entity.SenderInfo domenInfo = new by.epam.rafalovich.archiveservice.entity.SenderInfo();
-        domenInfo.setId(id);
-        domenInfo.setSenderPhoneNumber(number);
-        domenInfo.setSenderEmail(email);
-        domenInfo.setSenderFax(fax);
-        domen.setInfo(domenInfo);
+        SenderInfo domainInfo = new SenderInfo();
+        domainInfo.setId(id);
+        domainInfo.setSenderPhoneNumber(number);
+        domainInfo.setSenderEmail(email);
+        domainInfo.setSenderFax(fax);
+        domain.setInfo(domainInfo);
 
-        by.epam.rafalovich.archiveservice.Sender result = mapper.map(domen, by.epam.rafalovich.archiveservice.Sender.class);
+        SenderType result = mapper.map(domain, SenderType.class);
 
         assertPropertyLenientEquals("id", BigInteger.valueOf(id), result);
         assertPropertyLenientEquals("senderName", name, result);
