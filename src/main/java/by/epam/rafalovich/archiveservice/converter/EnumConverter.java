@@ -15,14 +15,9 @@ public class EnumConverter implements CustomConverter {
     public Object convert(Object destination, Object source, Class destinationClass, Class sourceClass) {
 
         LOG.info("Mapping Enum classes to EnumType class.");
-
-        if (null == source) {
-            return null;
-        }
-
         if (Enum.class.isAssignableFrom(sourceClass) && Enum.class.isAssignableFrom(destinationClass)) {
 
-                return Enum.valueOf((Class<Enum>) destinationClass, source.toString());
+                return Enum.valueOf((Class<Enum>) destinationClass, String.valueOf(source));
         }
 
         LOG.error("Enum classes are not assignable.");

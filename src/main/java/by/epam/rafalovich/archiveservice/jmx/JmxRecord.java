@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
  * Created by Dzmitry_Rafalovich on 2/14/2017.
  */
 
-//@ManagedResource(objectName = "mbeans:name=jmxRecord", description = "RecordBean.")
 @Component
 public class JmxRecord implements JmxRecordMBean {
 
@@ -22,7 +21,7 @@ public class JmxRecord implements JmxRecordMBean {
     @Autowired
     RecordDAO recordDAOImpl;
 
-    @ManagedOperation(description = "Shows a count of communicationRecords records.")
+    @ManagedOperation(description = "Shows count of communicationRecords records.")
     public long showRecordCount() {
 
         LOG.info("Invocation of showRecordCount method in JmxRecord");

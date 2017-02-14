@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RecipientDAOImpl extends GenericDAOImpl<Recipient> implements RecipientDAO {
 
+    public static final String FIND_BY_CONTACT = "findByContact";
+    public static final String CONTACT = "contact";
+
     @Override
     public Recipient findRecipientByContact(String contact) {
 
-        String queryName = "findByContact";
-        String propertyName = "contact";
-
-        Query query = currentSession().getNamedQuery(queryName).setString(propertyName, contact);
+        Query query = currentSession().getNamedQuery(FIND_BY_CONTACT).setString(CONTACT, contact);
         return (Recipient) query.uniqueResult();
     }
 }
