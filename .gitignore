@@ -4,6 +4,9 @@
 # ignore target classes
 /target/*
 
+# ignore logs
+/log/*
+
 # ignore libraries .jar
 /lib/*
 

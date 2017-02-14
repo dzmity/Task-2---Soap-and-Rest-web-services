@@ -1,5 +1,6 @@
 package by.epam.rafalovich.archiveservice.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -35,9 +36,6 @@ public class SenderInfo {
     @PrimaryKeyJoinColumn
     private Sender sender;
 
-    public SenderInfo() {
-    }
-
     public Long getId() {
         return id;
     }
@@ -70,6 +68,7 @@ public class SenderInfo {
         this.senderPhoneNumber = senderPhoneNumber;
     }
 
+    @JsonIgnore
     public Sender getSender() {
         return sender;
     }

@@ -11,4 +11,6 @@ import java.util.Collection;
 public interface RecordDAO extends GenericDAO<CommunicationRecord> {
 
     Collection<CommunicationRecord> findRecords(RecordCriteria recordCriteria);
+
+    long findRecordCount();
 }

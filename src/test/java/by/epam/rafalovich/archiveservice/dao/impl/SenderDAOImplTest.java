@@ -1,5 +1,4 @@
-package by.epam.rafalovich.archiveservice.dao.impl.dbunit;
-
+package by.epam.rafalovich.archiveservice.dao.impl;
 
 import by.epam.rafalovich.archiveservice.dao.SenderDAO;
 import by.epam.rafalovich.archiveservice.entity.Sender;

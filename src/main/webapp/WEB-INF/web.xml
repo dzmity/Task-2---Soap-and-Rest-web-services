@@ -11,8 +11,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <!--<param-value>classpath:cxf/cxf-servlet-soap.xml</param-value>-->
-    <param-value>classpath:cxf/cxf-servlet-rest.xml</param-value>
+    <param-value>classpath:spring/config/beans.xml</param-value>
   </context-param>
 
   <servlet>
@@ -24,6 +23,18 @@
   <servlet-mapping>
     <servlet-name>CXFServlet</servlet-name>
     <url-pattern>/services/*</url-pattern>
+  </servlet-mapping>
+
+  <!--for jmx mini-->
+
+  <servlet>
+    <servlet-name>JmxMiniConsoleServlet</servlet-name>
+    <servlet-class>org.jminix.console.servlet.MiniConsoleServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>JmxMiniConsoleServlet</servlet-name>
+    <url-pattern>/jmx/*</url-pattern>
   </servlet-mapping>
 
 </web-app>

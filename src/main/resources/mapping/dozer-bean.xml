@@ -12,8 +12,7 @@
 
 
     <bean id="org.dozer.Mapper" name="mapper" class="org.dozer.DozerBeanMapper">
-        <property name="mappingFiles"
-                  value="mapping/dozer_mapping.xml"/>
+        <property name="mappingFiles" value="mapping/dozer_mapping.xml"/>
         <property name="customConverters">
             <list>
                 <bean class="by.epam.rafalovich.archiveservice.converter.EnumConverter"/>

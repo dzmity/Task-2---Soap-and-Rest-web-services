@@ -1,4 +1,4 @@
-package by.epam.rafalovich.archiveservice.dao.impl.dbunit;
+package by.epam.rafalovich.archiveservice.dao.impl;
 
 import by.epam.rafalovich.archiveservice.dao.RecipientDAO;
 import by.epam.rafalovich.archiveservice.entity.CommunicationChannel;
@@ -60,7 +60,9 @@ public class RecipientDAOImplTest  {
     @DatabaseSetup(value= "/db/recipient/startDB.xml")
     public void findById() throws Exception {
 
-        Recipient result = recipientDAOImpl.findById(1L);
+        long id = 1L;
+
+        Recipient result = recipientDAOImpl.findById(id);
         assertPropertyLenientEquals("recipientContact","12345",result);
     }
 
@@ -68,11 +70,13 @@ public class RecipientDAOImplTest  {
     @DatabaseSetup(value= "/db/recipient/startDB.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void update() throws Exception {
 
+        long id = 1L;
+
         Recipient recipient = initRecipient();
-        recipient.setRecipientId(1L);
+        recipient.setRecipientId(id);
         recipientDAOImpl.update(recipient);
 
-        Recipient result = recipientDAOImpl.findById(1L);
+        Recipient result = recipientDAOImpl.findById(id);
         assertEquals(recipient, result);
 
     }
@@ -105,10 +109,11 @@ public class RecipientDAOImplTest  {
     public void findRecipientByContact() throws Exception {
 
         String contact = "12345@email.ru";
+        long recipientId = 2L;
 
         Recipient result = recipientDAOImpl.findRecipientByContact(contact);
         assertPropertyLenientEquals("recipientContact","12345@email.ru",result);
-        assertPropertyLenientEquals("recipientId",2L,result);
+        assertPropertyLenientEquals("recipientId",recipientId,result);
         assertPropertyLenientEquals("chanel", CommunicationChannel.EMAIL,result);
     }
 

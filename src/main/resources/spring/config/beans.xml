@@ -11,13 +11,40 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
+    <!-- Import properties files -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:spring/db/config.properties</value>
+                <value>classpath:jmx/config.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="false"/>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    </bean>
+
     <!-- Database Configuration -->
     <import resource="../db/data-source.xml"/>
     <import resource="../db/hibernate.xml"/>
 
-    <!-- Auto scan the components -->
-    <context:annotation-config/>
+    <!-- register dozer bean -->
+    <import resource="classpath:mapping/dozer-bean.xml" />
+
+    <!-- register cxf REST endpoint -->
+    <import resource="classpath:cxf/cxf-servlet-rest.xml" />
+    <!-- register cxf SOAP endpoint -->
+    <import resource="classpath:cxf/cxf-servlet-soap.xml" />
+
+    <!-- register JMX bean -->
+    <import resource="classpath:jmx/jmx-context.xml" />
+
+    <!-- to turn on annotation wiring == turns on only the registered beans
+        through ApplicationContext -->
+    <context:annotation-config />
+
+    <!-- scans and register beans using annotation-config (metadata) -->
     <context:component-scan base-package="by.epam.rafalovich.archiveservice" />
+
     <tx:annotation-driven/>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"

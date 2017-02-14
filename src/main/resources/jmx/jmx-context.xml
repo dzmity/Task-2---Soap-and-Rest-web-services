@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!--register mbean server-->
+    <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+        <property name="locateExistingServerIfPossible" value="true"/>
+    </bean>
+
+    <bean id="jmxRegistry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean">
+        <property name="port" value="${jmx.remote.port}"/>
+    </bean>
+
+    <bean id="serverConnector" class="org.springframework.jmx.support.ConnectorServerFactoryBean" depends-on="jmxRegistry">
+        <property name="objectName" value="connector:name=rmi"/>
+        <property name="threaded" value="true"/>
+        <property name="daemon" value="true"/>
+        <property name="serviceUrl" value="service:jmx:rmi://localhost:${rmi.server.remote.port}/jndi/rmi://localhost:${jmx.remote.port}/jmxrmi"/>
+    </bean>
+
+    <bean name="SpringMBeanExporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+        <property name="registrationBehaviorName" value="REGISTRATION_REPLACE_EXISTING"/>
+        <property name="beans">
+            <map>
+                <entry key="bean:name=jmxRecord1" value-ref="jmxRecord"/>
+            </map>
+        </property>
+    </bean>
+
+            <!--for annotation mode bean naming-->
+
+            <!--
+            <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+            <property name="autodetect" value="true" />
+            <property name="namingStrategy" ref="namingStrategy" />
+            <property name="assembler" ref="assembler" />
+            </bean>
+
+            <bean id="jmxAttributeSource" class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource" />
+
+            <bean id="assembler" class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
+            <property name="attributeSource" ref="jmxAttributeSource" />
+            </bean>
+
+            <bean id="namingStrategy" class="org.springframework.jmx.export.naming.MetadataNamingStrategy">
+            <property name="attributeSource" ref="jmxAttributeSource" />
+            </bean>-->
+</beans>

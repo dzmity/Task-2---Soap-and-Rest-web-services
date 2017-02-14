@@ -1,5 +1,7 @@
 package by.epam.rafalovich.archiveservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,7 +11,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "transactions")
 @NamedQueries({@NamedQuery(name = "findBySender", query = "from CommunicationRecord t where t.sender.senderId = :senderId"),
-        @NamedQuery(name = "findByRecipient", query = "from CommunicationRecord t where t.recipient.recipientId = :recipientId")})
+        @NamedQuery(name = "findByRecipient", query = "from CommunicationRecord t where t.recipient.recipientId = :recipientId"),
+        @NamedQuery(name = "findRecordCount", query = "select Count(t) from CommunicationRecord t")})
 public class CommunicationRecord {
     @Id
     @Column(name = "transaction_id")
@@ -27,6 +30,7 @@ public class CommunicationRecord {
     @JoinColumn(name = "recipient_id")
     private Recipient recipient;
     @Column(name = "operation_date_time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd_HH:mm:ss")
     private LocalDateTime dateTime;
 
     public CommunicationRecord() {

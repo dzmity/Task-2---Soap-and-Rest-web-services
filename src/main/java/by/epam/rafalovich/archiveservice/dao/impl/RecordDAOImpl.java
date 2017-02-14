@@ -6,6 +6,7 @@ import by.epam.rafalovich.archiveservice.entity.Operation;
 
 import by.epam.rafalovich.archiveservice.entity.RecordCriteria;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,11 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
     @Override
     public Collection<CommunicationRecord> findRecords(RecordCriteria recordCriteria) {
 
+        String senderIdPropertyName = "sender.senderId";
+        String recipientIdPropertyName = "recipient.recipientId";
+        String operationTypePropertyName = "operationType";
+        String dateTimePropertyName = "dateTime";
+
         Long senderId = recordCriteria.getSenderId();
         Long recipientId = recordCriteria.getRecipientId();
         LocalDateTime startDateTime = recordCriteria.getStartDateTime();
@@ -40,11 +46,20 @@ public class RecordDAOImpl extends GenericDAOImpl<CommunicationRecord> implement
         LocalDateTime end = endDateTime != null ? endDateTime : LocalDateTime.now();
 
         Criteria criteria = currentSession().createCriteria(CommunicationRecord.class);
-        criteria = senderId != null ? criteria.add(Restrictions.eq("sender.senderId", senderId)) : criteria;
-        criteria = recipientId != null ? criteria.add(Restrictions.eq("recipient.recipientId", recipientId)) : criteria;
-        criteria = type != null ? criteria.add(Restrictions.eq("operationType", type)) : criteria;
-        criteria.add(Restrictions.between("dateTime", start,end));
+        criteria = senderId != null ? criteria.add(Restrictions.eq(senderIdPropertyName, senderId)) : criteria;
+        criteria = recipientId != null ? criteria.add(Restrictions.eq(recipientIdPropertyName, recipientId)) : criteria;
+        criteria = type != null ? criteria.add(Restrictions.eq(operationTypePropertyName, type)) : criteria;
+        criteria.add(Restrictions.between(dateTimePropertyName, start,end));
 
         return criteria.list();
+    }
+
+    @Override
+    public long findRecordCount() {
+
+        String queryName = "findRecordCount";
+
+        Query query = currentSession().getNamedQuery(queryName);
+        return (Long) query.uniqueResult();
     }
 }

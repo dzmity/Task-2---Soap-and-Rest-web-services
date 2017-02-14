@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by Dzmitry_Rafalovich on 2/10/2017.
  */
-@Service
+@Service("soapArchiveService")
 public class NewArchiveService implements ArchivePortType {
 
     @Autowired

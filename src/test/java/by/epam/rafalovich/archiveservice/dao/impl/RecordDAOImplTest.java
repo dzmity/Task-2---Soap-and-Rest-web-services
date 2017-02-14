@@ -1,4 +1,4 @@
-package by.epam.rafalovich.archiveservice.dao.impl.dbunit;
+package by.epam.rafalovich.archiveservice.dao.impl;
 
 import by.epam.rafalovich.archiveservice.dao.RecordDAO;
 import by.epam.rafalovich.archiveservice.entity.*;
@@ -6,6 +6,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -95,11 +97,13 @@ public class RecordDAOImplTest {
     public void findById() throws Exception {
 
         Long id = 1L;
+        long senderId = 2L;
+        long recipientId = 2L;
 
         CommunicationRecord result = recordDAOImpl.findById(id);
         assertPropertyLenientEquals("operationType", Operation.RESERVATION_CHANGING, result);
-        assertPropertyLenientEquals("sender.senderId", 2L, result);
-        assertPropertyLenientEquals("recipient.recipientId", 2L, result);
+        assertPropertyLenientEquals("sender.senderId", senderId, result);
+        assertPropertyLenientEquals("recipient.recipientId", recipientId, result);
     }
 
     @Test
@@ -131,42 +135,65 @@ public class RecordDAOImplTest {
     public void delete() throws Exception {
 
         Long id = 1L;
+        int expectedSize = 0;
 
         CommunicationRecord record = recordDAOImpl.findById(id);
         recordDAOImpl.delete(record);
-        assertTrue(recordDAOImpl.findAll().size() == 0);
+        assertTrue(recordDAOImpl.findAll().size() == expectedSize);
     }
 
     @Test
     @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void findAll() throws Exception {
 
+        long senderId = 2L;
+        long recipientId = 2L;
+
         List<CommunicationRecord> result = recordDAOImpl.findAll();
         assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING), result);
-        assertPropertyLenientEquals("sender.senderId", Arrays.asList(2L), result);
-        assertPropertyLenientEquals("recipient.recipientId", Arrays.asList(2L), result);
+        assertPropertyLenientEquals("sender.senderId", Arrays.asList(senderId), result);
+        assertPropertyLenientEquals("recipient.recipientId", Arrays.asList(recipientId), result);
     }
 
-    /*@Test
+    @Test
     @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
-    public void findRecordsBySender() throws Exception {
+    public void findByCriteria() throws Exception {
 
-        Long id = 2L;
+        Long recordId = 1L;
+        Long senderId = 2L;
+        Long recipientId = 2L;
+        int yearsBeforeCount = 3;
+        int expectedCount = 1;
 
-        List<CommunicationRecord> result = (List<CommunicationRecord>) recordDAOImpl.findRecordsBySender(2L);
-        assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING), result);
-        assertPropertyLenientEquals("recipient.recipientId", Arrays.asList(2L), result);
-    }*/
+        Operation operation = Operation.RESERVATION_CHANGING;
+        LocalDateTime startDateTime = LocalDateTime.now().minusYears(yearsBeforeCount);
+        LocalDateTime endDateTime = LocalDateTime.now();
 
-    /*@Test
+
+        RecordCriteria recordCriteria = new RecordCriteria();
+        recordCriteria.setSenderId(senderId);
+        recordCriteria.setOperationType(operation);
+        recordCriteria.setRecipientId(recipientId);
+        recordCriteria.setStartDateTime(startDateTime);
+        recordCriteria.setEndDateTime(endDateTime);
+
+        Collection<CommunicationRecord> results = recordDAOImpl.findRecords(recordCriteria);
+
+        assertTrue(results.size() == expectedCount);
+        assertPropertyLenientEquals("recordId", Arrays.asList(recordId), results);
+        assertPropertyLenientEquals("operationType", Arrays.asList(operation), results);
+        assertPropertyLenientEquals("sender.senderId", Arrays.asList(senderId), results);
+        assertPropertyLenientEquals("recipient.recipientId", Arrays.asList(recipientId), results);
+    }
+
+    @Test
     @DatabaseSetup(value= "/db/record/default.xml", type = DatabaseOperation.CLEAN_INSERT)
-    public void findRecordsByRecipient() throws Exception {
+    public void findRecordCount() throws Exception {
 
-        Long id = 2L;
+        long expectedCount = 1;
+        long result = recordDAOImpl.findRecordCount();
+        assertTrue(expectedCount == result);
+    }
 
-        List<CommunicationRecord> result = (List<CommunicationRecord>) recordDAOImpl.findRecordsByRecipient(2L);
-        assertPropertyLenientEquals("operationType", Arrays.asList(Operation.RESERVATION_CHANGING), result);
-        assertPropertyLenientEquals("sender.senderId", Arrays.asList(2L), result);
-    }*/
 
 }

@@ -16,7 +16,10 @@ public class RecipientDAOImpl extends GenericDAOImpl<Recipient> implements Recip
     @Override
     public Recipient findRecipientByContact(String contact) {
 
-        Query query = currentSession().getNamedQuery("findByContact").setString("contact",contact);
+        String queryName = "findByContact";
+        String propertyName = "contact";
+
+        Query query = currentSession().getNamedQuery(queryName).setString(propertyName, contact);
         return (Recipient) query.uniqueResult();
     }
 }

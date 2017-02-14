@@ -14,11 +14,8 @@
     <import resource="classpath:META-INF/cxf/cxf-extension-jaxws.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-    <import resource="classpath:spring/config/beans.xml" />
-    <import resource="classpath:mapping/dozer-bean.xml" />
-
     <jaxws:endpoint
             id="archiveService"
             implementor="by.epam.rafalovich.archiveservice.provider.soap.impl.NewArchiveService"
-            address="soap/archiveservice" />
+            address="/soapservice" />
 </beans>

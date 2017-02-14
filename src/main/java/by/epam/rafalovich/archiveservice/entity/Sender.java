@@ -67,4 +67,14 @@ public class Sender {
 
         return HashCodeBuilder.reflectionHashCode(this);
     }
+
+    @Override
+    public String toString() {
+
+        return "Sender{" +
+                "senderId=" + senderId +
+                ", senderName='" + senderName + '\'' +
+                ", info=" + info +
+                '}';
+    }
 }

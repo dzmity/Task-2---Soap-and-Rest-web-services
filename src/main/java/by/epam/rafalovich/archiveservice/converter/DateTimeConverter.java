@@ -1,6 +1,8 @@
 package by.epam.rafalovich.archiveservice.converter;
 
 import org.dozer.CustomConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
  */
 public class DateTimeConverter implements CustomConverter {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DateTimeConverter.class);
+
     @Override
     public Object convert(Object destination, Object source, Class destinationClass, Class sourceClass) {
 
@@ -22,6 +26,8 @@ public class DateTimeConverter implements CustomConverter {
         if (XMLGregorianCalendar.class.isAssignableFrom(sourceClass)
                 && LocalDateTime.class.isAssignableFrom(destinationClass)) {
 
+            LOG.info("Mapping XMLGregorianCalendar to LocalDateTime.");
+
             XMLGregorianCalendar calendar = (XMLGregorianCalendar) source;
             LocalDateTime dateTime = LocalDateTime.of(calendar.getYear(), calendar.getMonth(), calendar.getDay(),
                     calendar.getHour(), calendar.getMinute(), calendar.getSecond());
@@ -29,6 +35,8 @@ public class DateTimeConverter implements CustomConverter {
 
         } else if (XMLGregorianCalendar.class.isAssignableFrom(destinationClass)
                 && LocalDateTime.class.isAssignableFrom(sourceClass)) {
+
+            LOG.info("Mapping LocalDateTime to XMLGregorianCalendar.");
 
             try{
 
@@ -43,8 +51,7 @@ public class DateTimeConverter implements CustomConverter {
                 return xcal;
 
             } catch (DatatypeConfigurationException e) {
-                e.printStackTrace();
-                //todo
+                LOG.error("Wrong dateTime data for mapping LocalDateTime to XMLGregorianCalendar from request.");
             }
         }
         return null;

@@ -5,13 +5,12 @@ import by.epam.rafalovich.archiveservice.entity.Operation;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * Created by Dzmitry_Rafalovich on 2/6/2017.
  */
-@Path("/archiveservice")
+@Path("/recordservice")
 public interface IArchiveService {
 
     @GET
@@ -20,8 +19,8 @@ public interface IArchiveService {
     List<CommunicationRecord> findRecords(
             @QueryParam("senderId") Long senderId,
             @QueryParam("recipientContact") String recipientContact,
-            @QueryParam("startDateTime") LocalDateTime startDateTime,
-            @QueryParam("endDateTime") LocalDateTime endDateTime,
+            @QueryParam("startDateTime") String startDateTime,
+            @QueryParam("endDateTime") String endDateTime,
             @QueryParam("operationType") Operation operationType);
 
 }
