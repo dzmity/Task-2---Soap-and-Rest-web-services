@@ -9,20 +9,15 @@ import javax.persistence.*;
 @Table(name = "recipients")
 @NamedQueries({@NamedQuery(name = "findByContact", query = "from Recipient r where r.recipientContact = :contact")})
 public class Recipient {
-    @Id
-    @Column(name = "recipient_id")
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "recipient_seq_gen")
-    @SequenceGenerator(name = "recipient_seq_gen", sequenceName = "recipient_sequence" , initialValue = 1, allocationSize = 1)
+
     private Long recipientId;
-    @Column(name = "CHANNEL_ID")
-    @Enumerated(EnumType.ORDINAL)
     private CommunicationChannel chanel;
-    @Column(name = "recipient_contact")
     private String recipientContact;
 
-    public Recipient() {
-    }
-
+    @Id
+    @Column(name = "recipient_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recipient_seq_gen")
+    @SequenceGenerator(name = "recipient_seq_gen", sequenceName = "recipient_sequence" , initialValue = 1, allocationSize = 1)
     public Long getRecipientId() {
         return recipientId;
     }
@@ -31,6 +26,8 @@ public class Recipient {
         this.recipientId = recipientId;
     }
 
+    @Column(name = "CHANNEL_ID")
+    @Enumerated(EnumType.ORDINAL)
     public CommunicationChannel getChanel() {
         return chanel;
     }
@@ -39,6 +36,7 @@ public class Recipient {
         this.chanel = chanel;
     }
 
+    @Column(name = "recipient_contact")
     public String getRecipientContact() {
         return recipientContact;
     }

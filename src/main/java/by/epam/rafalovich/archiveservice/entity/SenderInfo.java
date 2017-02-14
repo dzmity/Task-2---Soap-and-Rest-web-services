@@ -19,23 +19,17 @@ import javax.persistence.*;
         query = "from SenderInfo s where s.senderEmail = :email")})
 public class SenderInfo {
 
+    private Long id;
+    private String senderEmail;
+    private String senderFax;
+    private String senderPhoneNumber;
+    private Sender sender;
+
     @Id
     @GeneratedValue(generator = "myForeignGenerator")
     @GenericGenerator(name = "myForeignGenerator", strategy = "foreign",
             parameters = @Parameter(name = "property", value = "sender"))
     @Column(name = "id")
-    private Long id;
-    @Column(name = "email")
-    private String senderEmail;
-    @Column(name = "fax_number")
-    private String senderFax;
-    @Column(name = "telephone_number")
-    private String senderPhoneNumber;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Sender.class)
-    @PrimaryKeyJoinColumn
-    private Sender sender;
-
     public Long getId() {
         return id;
     }
@@ -44,6 +38,7 @@ public class SenderInfo {
         this.id = id;
     }
 
+    @Column(name = "email")
     public String getSenderEmail() {
         return senderEmail;
     }
@@ -52,6 +47,7 @@ public class SenderInfo {
         this.senderEmail = senderEmail;
     }
 
+    @Column(name = "fax_number")
     public String getSenderFax() {
         return senderFax;
     }
@@ -60,6 +56,7 @@ public class SenderInfo {
         this.senderFax = senderFax;
     }
 
+    @Column(name = "telephone_number")
     public String getSenderPhoneNumber() {
         return senderPhoneNumber;
     }
@@ -69,6 +66,8 @@ public class SenderInfo {
     }
 
     @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Sender.class)
+    @PrimaryKeyJoinColumn
     public Sender getSender() {
         return sender;
     }

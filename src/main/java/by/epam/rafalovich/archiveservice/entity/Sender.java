@@ -16,21 +16,14 @@ import javax.persistence.*;
         @NamedQuery(name = "findByName", query = "from Sender s where s.senderName = :name")})
 public class Sender {
 
+    private Long senderId;
+    private String senderName;
+    private SenderInfo info;
 
     @Id
     @Column(name = "sender_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sender_seq_gen")
     @SequenceGenerator(name = "sender_seq_gen", sequenceName = "sender_sequence" , initialValue = 1, allocationSize = 1)
-    private Long senderId;
-    @Column(name = "sender_name")
-    private String senderName;
-
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = SenderInfo.class , mappedBy = "sender")
-    private SenderInfo info;
-
-    public Sender() {
-    }
-
     public Long getSenderId() {
         return senderId;
     }
@@ -39,7 +32,7 @@ public class Sender {
         this.senderId = senderId;
     }
 
-
+    @Column(name = "sender_name")
     public String getSenderName() {
         return senderName;
     }
@@ -48,6 +41,7 @@ public class Sender {
         this.senderName = senderName;
     }
 
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = SenderInfo.class , mappedBy = "sender")
     public SenderInfo getInfo() {
         return info;
     }

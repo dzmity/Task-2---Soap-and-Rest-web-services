@@ -14,28 +14,17 @@ import java.time.LocalDateTime;
         @NamedQuery(name = "findByRecipient", query = "from CommunicationRecord t where t.recipient.recipientId = :recipientId"),
         @NamedQuery(name = "findRecordCount", query = "select Count(t) from CommunicationRecord t")})
 public class CommunicationRecord {
+
+    private Long recordId;
+    private Operation operationType;
+    private Sender sender;
+    private Recipient recipient;
+    private LocalDateTime dateTime;
+
     @Id
     @Column(name = "transaction_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq_gen")
     @SequenceGenerator(name = "transaction_seq_gen", sequenceName = "transaction_sequence" , initialValue = 1, allocationSize = 1)
-    private Long recordId;
-
-    @Column(name = "OPERATION_ID" )
-    @Enumerated(EnumType.ORDINAL)
-    private Operation operationType;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sender_id")
-    private Sender sender;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "recipient_id")
-    private Recipient recipient;
-    @Column(name = "operation_date_time")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd_HH:mm:ss")
-    private LocalDateTime dateTime;
-
-    public CommunicationRecord() {
-    }
-
     public Long getRecordId() {
         return recordId;
     }
@@ -44,6 +33,8 @@ public class CommunicationRecord {
         this.recordId = recordId;
     }
 
+    @Column(name = "OPERATION_ID" )
+    @Enumerated(EnumType.ORDINAL)
     public Operation getOperationType() {
         return operationType;
     }
@@ -52,6 +43,8 @@ public class CommunicationRecord {
         this.operationType = operationType;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sender_id")
     public Sender getSender() {
         return sender;
     }
@@ -60,6 +53,8 @@ public class CommunicationRecord {
         this.sender = sender;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "recipient_id")
     public Recipient getRecipient() {
         return recipient;
     }
@@ -68,6 +63,8 @@ public class CommunicationRecord {
         this.recipient = recipient;
     }
 
+    @Column(name = "operation_date_time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd_HH:mm:ss")
     public LocalDateTime getDateTime() {
         return dateTime;
     }
