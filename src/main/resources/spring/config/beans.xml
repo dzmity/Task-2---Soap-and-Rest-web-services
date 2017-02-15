@@ -16,7 +16,6 @@
         <property name="locations">
             <list>
                 <value>classpath:spring/db/config.properties</value>
-                <value>classpath:jmx/config.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="false"/>
@@ -24,8 +23,7 @@
     </bean>
 
     <!-- Database Configuration -->
-    <import resource="../db/data-source.xml"/>
-    <import resource="../db/hibernate.xml"/>
+    <import resource="classpath:spring/db/hibernate.xml"/>
 
     <!-- register dozer bean -->
     <import resource="classpath:mapping/dozer-bean.xml" />
