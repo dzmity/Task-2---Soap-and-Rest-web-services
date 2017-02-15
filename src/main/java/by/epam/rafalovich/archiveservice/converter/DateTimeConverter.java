@@ -20,25 +20,25 @@ public class DateTimeConverter implements CustomConverter {
     public Object convert(Object destination, Object source, Class destinationClass, Class sourceClass) {
 
         if (null == source) {
+
+            LOG.info("Source is null. Return null.");
             return null;
         }
 
-        if (XMLGregorianCalendar.class.isAssignableFrom(sourceClass)
-                && LocalDateTime.class.isAssignableFrom(destinationClass)) {
+        try {
 
-            LOG.info("Mapping XMLGregorianCalendar to LocalDateTime.");
+            if (XMLGregorianCalendar.class.isAssignableFrom(sourceClass)&& LocalDateTime.class.isAssignableFrom(destinationClass)) {
 
-            XMLGregorianCalendar calendar = (XMLGregorianCalendar) source;
-            LocalDateTime dateTime = LocalDateTime.of(calendar.getYear(), calendar.getMonth(), calendar.getDay(),
-                    calendar.getHour(), calendar.getMinute(), calendar.getSecond());
-            return dateTime;
+                LOG.info("Mapping XMLGregorianCalendar to LocalDateTime.");
 
-        } else if (XMLGregorianCalendar.class.isAssignableFrom(destinationClass)
-                && LocalDateTime.class.isAssignableFrom(sourceClass)) {
+                XMLGregorianCalendar calendar = (XMLGregorianCalendar) source;
+                LocalDateTime dateTime = LocalDateTime.of(calendar.getYear(), calendar.getMonth(), calendar.getDay(),
+                        calendar.getHour(), calendar.getMinute(), calendar.getSecond());
+                return dateTime;
 
-            LOG.info("Mapping LocalDateTime to XMLGregorianCalendar.");
+            }else if (XMLGregorianCalendar.class.isAssignableFrom(destinationClass) && LocalDateTime.class.isAssignableFrom(sourceClass)) {
 
-            try{
+                LOG.info("Mapping LocalDateTime to XMLGregorianCalendar.");
 
                 LocalDateTime localDateTime = (LocalDateTime) source;
                 XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
@@ -49,11 +49,17 @@ public class DateTimeConverter implements CustomConverter {
                 xcal.setMinute(localDateTime.getMinute());
                 xcal.setSecond(localDateTime.getSecond());
                 return xcal;
-
-            } catch (DatatypeConfigurationException e) {
-                LOG.error("Wrong dateTime data for mapping LocalDateTime to XMLGregorianCalendar from request.");
             }
+
+        } catch (DatatypeConfigurationException e) {
+            LOG.error("Wrong dateTime data for mapping LocalDateTime to XMLGregorianCalendar from request. Return null.");
+            return null;
+        } catch (ClassCastException e) {
+            LOG.error("Impossible to convert source to sourceClass. Return null.");
+            return null;
         }
+
+        LOG.error("Wrong combination of sourceClass and destinationClass. Return null.");
         return null;
     }
 }
