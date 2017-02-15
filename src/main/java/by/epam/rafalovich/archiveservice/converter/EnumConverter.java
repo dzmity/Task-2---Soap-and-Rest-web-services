@@ -14,13 +14,18 @@ public class EnumConverter implements CustomConverter {
     @Override
     public Object convert(Object destination, Object source, Class destinationClass, Class sourceClass) {
 
-        LOG.info("Mapping Enum classes to EnumType class.");
+        if (null == source) {
+            LOG.info("Source is null. Return null.");
+            return null;
+        }
+
+        LOG.info("Mapping Enum class and EnumType class.");
         if (Enum.class.isAssignableFrom(sourceClass) && Enum.class.isAssignableFrom(destinationClass)) {
 
                 return Enum.valueOf((Class<Enum>) destinationClass, String.valueOf(source));
         }
 
-        LOG.error("Enum classes are not assignable.");
+        LOG.error("DestinationClass or sourceClass classes are not assignable for Enum.");
         return null;
     }
 }

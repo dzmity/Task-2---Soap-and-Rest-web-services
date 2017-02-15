@@ -14,8 +14,8 @@ import static org.junit.Assert.*;
  */
 public class DateTimeConverterTest {
 
-    private static final Class<?> CALENDAR_CLASS_IMPL = XMLGregorianCalendar.class;
-    private static final Class<?> DATE_TIME_CLASS = LocalDateTime.class;
+    private static final Class CALENDAR_CLASS_IMPL = XMLGregorianCalendar.class;
+    private static final Class DATE_TIME_CLASS = LocalDateTime.class;
     private static final DateTimeConverter dateTimeConverter = new DateTimeConverter();
 
     @Test
@@ -26,7 +26,7 @@ public class DateTimeConverterTest {
         XMLGregorianCalendar destination = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime);
         destination =(XMLGregorianCalendar) dateTimeConverter.convert(destination, source, CALENDAR_CLASS_IMPL, DATE_TIME_CLASS);
 
-        assertEquals(null, destination);
+        assertNull(destination);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class DateTimeConverterTest {
         XMLGregorianCalendar destination = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime);
         destination =(XMLGregorianCalendar) dateTimeConverter.convert(destination, notAssignableSource, CALENDAR_CLASS_IMPL, DATE_TIME_CLASS);
 
-        assertEquals(null, destination);
+        assertNull(destination);
     }
 
     @Test
@@ -78,10 +78,10 @@ public class DateTimeConverterTest {
 
         LocalDate source = LocalDate.now();
         String dateTime = "2010-05-30T09:00:00";
-        Class<String> nonAssignableClass = String.class;
+        Class nonAssignableClass = String.class;
         XMLGregorianCalendar destination = DatatypeFactory.newInstance().newXMLGregorianCalendar(dateTime);
         destination =(XMLGregorianCalendar) dateTimeConverter.convert(destination, source, nonAssignableClass, DATE_TIME_CLASS);
 
-        assertEquals(null, destination);
+        assertNull(destination);
     }
 }
